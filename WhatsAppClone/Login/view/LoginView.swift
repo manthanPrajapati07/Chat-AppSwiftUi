@@ -10,7 +10,13 @@ import SwiftUI
 struct LoginView: View {
     
     @State var phoneNumber : String = ""
-    @State var SelectedCountry = Country(name: "India", code: "+91")
+    @State var SelectedCountry = Country(name: "India", code: "+91", validNumberCount: 10)
+    @State private var previousCountry: Country? = Country(name: "India", code: "+91", validNumberCount: 10)
+
+    
+    var isValidNumber: Bool {
+        phoneNumber.count > SelectedCountry.validNumberCount
+    }
     
     var body: some View {
         
@@ -32,6 +38,13 @@ struct LoginView: View {
                 }
             }
         }
+        .onChange(of: SelectedCountry) { newValue in
+                    if newValue.code != previousCountry?.code {
+                        phoneNumber = ""
+                    }
+                    previousCountry = newValue
+                }
+        .ignoresSafeArea()
         
     }
     
@@ -43,7 +56,7 @@ struct LoginView: View {
                Spacer()
                 Text("Done")
                     .font(.system(size: 20))
-                    .foregroundColor(.gray)
+                    .foregroundColor(isValidNumber ? .blue : .gray)
             }
             .padding(.horizontal)
         }
@@ -56,7 +69,6 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 0){
             Divider()
             NavigationLink {
-                
                CountriesListView(SelectedCountry: $SelectedCountry)
             } label: {
                 

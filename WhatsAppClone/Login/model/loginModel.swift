@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct Country: Identifiable {
+struct Country: Identifiable,Equatable {
     let id = UUID()
     let name: String
     let code: String
+    let validNumberCount : Int
 }
 
