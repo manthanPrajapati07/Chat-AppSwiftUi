@@ -15,7 +15,7 @@ struct OTPFieldView: View {
     
     @FocusState private var pinFocusState: FocusPin?
     @Binding private var otp: String
-    @State private var pins: [String]
+    @State private var pins: [String] = ["-","-","-","-","-","-"]
     
     var numberOfFields: Int
     
@@ -30,9 +30,9 @@ struct OTPFieldView: View {
     }
     
     var body: some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 5) {
             ForEach(0..<numberOfFields, id: \.self) { index in
-                TextField("-", text: $pins[index])
+                TextField("-" , text: $pins[index])
                     .modifier(OtpModifier(pin: $pins[index]))
                     .foregroundColor(.black)
                     .onChange(of: pins[index]) { newVal in
@@ -99,12 +99,11 @@ struct OtpModifier: ViewModifier {
             .keyboardType(.numberPad)
             .onReceive(Just(pin)) { _ in limitText(textLimit) }
             .frame(width: 40, height: 48)
-            .font(.system(size: 14))
+            .font(.system(size: 20, weight: .medium))
 //            .background(
 //                RoundedRectangle(cornerRadius: 2)
 //                    .stroke(Color.gray, lineWidth: 1)
 //            )
-            .underline()
     }
 }
 
@@ -116,7 +115,7 @@ struct OTPFieldView_Previews: PreviewProvider {
             Text("VERIFICATION CODE")
                 .foregroundColor(Color.gray)
                 .font(.system(size: 12))
-            OTPFieldView(numberOfFields: 5, otp: .constant("54321"))
+            OTPFieldView(numberOfFields: 6, otp: .constant("543217"))
                 .previewLayout(.sizeThatFits)
         }
     }

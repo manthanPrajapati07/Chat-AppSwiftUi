@@ -46,7 +46,7 @@ struct CountriesListView: View {
             Country(name: "Malaysia", code: "+60", validNumberCount: 9)]
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List(filterContries) { country in
                 Button {
                     SelectedCountry = country

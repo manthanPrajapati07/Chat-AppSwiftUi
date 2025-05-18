@@ -12,17 +12,19 @@ struct LoginView: View {
     @State var phoneNumber : String = ""
     @State var SelectedCountry = Country(name: "India", code: "+91", validNumberCount: 10)
     @State private var previousCountry: Country? = Country(name: "India", code: "+91", validNumberCount: 10)
+    @State private var FullPhoneNumber = ""
+    @State private var navigateToOTP = false
+    
     
     private var authVM = AuthViewModel.shared
-
-    
+        
     var isValidNumber: Bool {
-        phoneNumber.count > SelectedCountry.validNumberCount
+        phoneNumber.count >= SelectedCountry.validNumberCount
     }
     
     var body: some View {
         
-        NavigationStack{
+        NavigationView{
             GeometryReader{ geometry in
                 
                 VStack(spacing: 0) {
@@ -38,32 +40,45 @@ struct LoginView: View {
                     
                     Spacer()
                 }
+                
+                NavigationLink(
+                    destination: OtpVerifyView(phoneNumber: $FullPhoneNumber),
+                    isActive: $navigateToOTP
+                ) {
+                    EmptyView()
+                }
+                .padding()
             }
         }
         .onChange(of: SelectedCountry) { newValue in
-                    if newValue.code != previousCountry?.code {
-                        phoneNumber = ""
-                    }
-                    previousCountry = newValue
-                }
+            if newValue.code != previousCountry?.code {
+                phoneNumber = ""
+            }
+            previousCountry = newValue
+        }
         .ignoresSafeArea()
         
+        
     }
+    
     
     var CustomNavigationBar: some View {
         ZStack {
             Text("Phone number")
                 .font(.system(size: 20, weight: .semibold))
             HStack {
-               Spacer()
+                Spacer()
                 Button {
                     if isValidNumber{
-                        authVM.sendOTP(to: phoneNumber) { success in
+                        let wholeNumber = "\(SelectedCountry.code)\(phoneNumber)"
+                        print(wholeNumber)
+                        authVM.sendOTP(to: wholeNumber) { success in
                             switch success{
                             case .success():
-                                break
+                                FullPhoneNumber = wholeNumber
+                                navigateToOTP = true
                             case .failure(_):
-                                break
+                                print("invalid number")
                             }
                         }
                     }
@@ -72,7 +87,8 @@ struct LoginView: View {
                         .font(.system(size: 20))
                         .foregroundColor(isValidNumber ? .blue : .gray)
                 }
-
+                
+                
             }
             .padding(.horizontal)
         }
@@ -85,7 +101,7 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 0){
             Divider()
             NavigationLink {
-               CountriesListView(SelectedCountry: $SelectedCountry)
+                CountriesListView(SelectedCountry: $SelectedCountry)
             } label: {
                 
                 Text(SelectedCountry.name)
@@ -97,7 +113,7 @@ struct LoginView: View {
             }
             Divider()
                 .padding(.leading, 20)
-                
+            
             HStack{
                 Text(SelectedCountry.code)
                     .font(.system(size: 20, weight: .regular))
@@ -107,7 +123,7 @@ struct LoginView: View {
                 TextField("phone number", text: $phoneNumber)
                     .font(.system(size: 25, weight: .regular))
                     .keyboardType(.numberPad)
-                    
+                
             }
             .frame(maxHeight: 60)
             Divider()

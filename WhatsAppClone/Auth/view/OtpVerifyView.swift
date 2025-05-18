@@ -10,10 +10,24 @@ import SwiftUI
 struct OtpVerifyView: View {
     
     @State private var otp: String = ""
-      @FocusState private var isOTPFieldFocused: Bool
-      private let numberOfFieldsInOTP = 6
+    @FocusState private var isOTPFieldFocused: Bool
+
+    @State private var timer : Timer?
+    @State private var remainingTime = 60
+    @State private var isResendtimer : Bool = false
+    private var authVM = AuthViewModel.shared
+    @Binding var phoneNumber : String
     
-   
+    var formattedTime: String {
+        let minutes = remainingTime / 60
+        let seconds = remainingTime % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
+    
+    init(phoneNumber: Binding<String>) {
+        self._phoneNumber = phoneNumber
+    }
     
     var body: some View {
         GeometryReader{ geometry in
@@ -35,9 +49,56 @@ struct OtpVerifyView: View {
                 }
                 
                 OtpFieldView
+                    .padding()
+                    .frame(maxWidth: geometry.size.width * 0.6, maxHeight: 50)
+                    .padding(.top, 30)
                 
+                HStack{
+                    Text("Didn't receive a verification code?")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(Color.gray)
+                    
+                    Button {
+                        authVM.sendOTP(to: phoneNumber) { success in
+                            switch success{
+                            case .success():
+                                startTimer()
+                                print("otp Sended again")
+                            case .failure(_):
+                                print("invalid number")
+                            }
+                        }
+                    } label: {
+                        Text("Resend")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundStyle(isResendtimer ? Color.blue : Color.gray)
+                            .multilineTextAlignment(.leading)
+                    }
+
+        
+                  
+                }
+                .frame(maxWidth: geometry.size.width * 0.8)
+                .padding()
+                
+                HStack{
+                    Text("You may request a new code in")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(Color.gray)
+    
+                    Text(formattedTime)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(Color.black)
+                        .multilineTextAlignment(.leading)
+                        
+                }
+                .frame(maxWidth: geometry.size.width * 0.8)
+        
            
                 Spacer()
+            }
+            .onAppear {
+                startTimer()
             }
         }
     }
@@ -52,7 +113,7 @@ struct OtpVerifyView: View {
                 .foregroundColor(.blue)
                 .padding(.leading)
             
-            Text("Edit")
+            Text("Edit \(phoneNumber)")
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundStyle(Color.blue)
         }
@@ -63,22 +124,44 @@ struct OtpVerifyView: View {
     
     var OtpFieldView : some View{
         VStack{
-            OTPFieldView(numberOfFields: numberOfFieldsInOTP, otp: $otp)
+            OTPFieldView(numberOfFields: 6, otp: $otp)
                 .onChange(of: otp) { newOtp in
-                    if newOtp.count == numberOfFieldsInOTP {
-                        
+                    if newOtp.count == 6 {
+                        authVM.verifyOTP(otp) { success in
+                            switch success{
+                                
+                            case .success(_):
+                                print("otp verified")
+                                break
+                                
+                            case .failure(_):
+                                print("otp Filed")
+                                break
+                            }
+                        }
                     }
                 }
                 .focused($isOTPFieldFocused)
-            
-            Text("Entered OTP: \(otp)")
         }
     }
     
     
-
+     func startTimer() {
+        timer?.invalidate()  // Invalidate any existing timer
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if remainingTime > 0 {
+                remainingTime -= 1
+            } else {
+                timer?.invalidate()
+                isResendtimer = true
+            }
+        }
+    }
+    
+   
 }
 
 #Preview {
-    OtpVerifyView()
+    OtpVerifyView(phoneNumber: .constant("1234567"))
 }
