@@ -12,6 +12,8 @@ struct LoginView: View {
     @State var phoneNumber : String = ""
     @State var SelectedCountry = Country(name: "India", code: "+91", validNumberCount: 10)
     @State private var previousCountry: Country? = Country(name: "India", code: "+91", validNumberCount: 10)
+    
+    private var authVM = AuthViewModel.shared
 
     
     var isValidNumber: Bool {
@@ -54,9 +56,23 @@ struct LoginView: View {
                 .font(.system(size: 20, weight: .semibold))
             HStack {
                Spacer()
-                Text("Done")
-                    .font(.system(size: 20))
-                    .foregroundColor(isValidNumber ? .blue : .gray)
+                Button {
+                    if isValidNumber{
+                        authVM.sendOTP(to: phoneNumber) { success in
+                            switch success{
+                            case .success():
+                                break
+                            case .failure(_):
+                                break
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Done")
+                        .font(.system(size: 20))
+                        .foregroundColor(isValidNumber ? .blue : .gray)
+                }
+
             }
             .padding(.horizontal)
         }
