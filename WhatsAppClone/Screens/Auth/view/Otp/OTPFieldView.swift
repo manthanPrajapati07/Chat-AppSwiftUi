@@ -65,7 +65,7 @@ struct OTPFieldView: View {
             }
         }
         .onAppear {
-            // Initialize pins based on the OTP string
+        
             updatePinsFromOTP()
         }
     }

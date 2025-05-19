@@ -21,8 +21,13 @@
 		1846C8762DD9126900AEE854 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8752DD9126900AEE854 /* FirebaseDatabase */; };
 		1846C8782DD9126900AEE854 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8772DD9126900AEE854 /* FirebaseFirestore */; };
 		1846C87A2DD9126900AEE854 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8792DD9126900AEE854 /* FirebaseStorage */; };
-		1846C8802DD9130400AEE854 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1846C87F2DD9130400AEE854 /* GoogleService-Info.plist */; };
 		1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1846C8822DD9168400AEE854 /* AuthViewModel.swift */; };
+		18B6CB3C2DDB930100410B46 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6CB3B2DDB92F300410B46 /* AppConstant.swift */; };
+		18B6CB3E2DDB973200410B46 /* AppFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6CB3D2DDB972B00410B46 /* AppFunctions.swift */; };
+		18B6CB412DDB9EDB00410B46 /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6CB402DDB9EDB00410B46 /* NVActivityIndicatorView */; };
+		18B6CB432DDB9EDB00410B46 /* NVActivityIndicatorViewExtended in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6CB422DDB9EDB00410B46 /* NVActivityIndicatorViewExtended */; };
+		18B6CB482DDBA67700410B46 /* AddProfileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */; };
+		82FE20EF2DDAFB790075DD5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82FE20EE2DDAFB790075DD5B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,9 +41,12 @@
 		182FB4992DD511D10056F573 /* CountriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListView.swift; sourceTree = "<group>"; };
 		18410F782DD9DCA500A3820D /* OtpVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVerifyView.swift; sourceTree = "<group>"; };
 		18410F7A2DD9DCB800A3820D /* OTPFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
-		1846C87F2DD9130400AEE854 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		1846C8812DD9158200AEE854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1846C8812DD9158200AEE854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1846C8822DD9168400AEE854 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		18B6CB3B2DDB92F300410B46 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
+		18B6CB3D2DDB972B00410B46 /* AppFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFunctions.swift; sourceTree = "<group>"; };
+		18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileDetailsView.swift; sourceTree = "<group>"; };
+		82FE20EE2DDAFB790075DD5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +54,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18B6CB432DDB9EDB00410B46 /* NVActivityIndicatorViewExtended in Frameworks */,
 				1846C8762DD9126900AEE854 /* FirebaseDatabase in Frameworks */,
 				1846C8782DD9126900AEE854 /* FirebaseFirestore in Frameworks */,
+				18B6CB412DDB9EDB00410B46 /* NVActivityIndicatorView in Frameworks */,
 				1846C8742DD9126900AEE854 /* FirebaseCore in Frameworks */,
 				1846C87A2DD9126900AEE854 /* FirebaseStorage in Frameworks */,
 				1846C8722DD9126900AEE854 /* FirebaseAuth in Frameworks */,
@@ -76,13 +86,14 @@
 		182FB48C2DD510810056F573 /* WhatsAppClone */ = {
 			isa = PBXGroup;
 			children = (
-				1846C8812DD9158200AEE854 /* Info.plist */,
-				182FB4932DD5109D0056F573 /* Auth */,
+				18B6CB3A2DDB92E000410B46 /* Constant */,
+				18B6CB392DDB92D500410B46 /* Screens */,
 				182FB4922DD510880056F573 /* Splash */,
 				182FB4872DD510810056F573 /* Assets.xcassets */,
+				1846C8812DD9158200AEE854 /* Info.plist */,
+				82FE20EE2DDAFB790075DD5B /* GoogleService-Info.plist */,
 				182FB4882DD510810056F573 /* ContentView.swift */,
 				182FB48B2DD510810056F573 /* WhatsAppCloneApp.swift */,
-				1846C87F2DD9130400AEE854 /* GoogleService-Info.plist */,
 			);
 			path = WhatsAppClone;
 			sourceTree = "<group>";
@@ -116,10 +127,9 @@
 		182FB4952DD510B40056F573 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				182FB4892DD510810056F573 /* LoginView.swift */,
-				18410F782DD9DCA500A3820D /* OtpVerifyView.swift */,
-				182FB4992DD511D10056F573 /* CountriesListView.swift */,
-				18410F7A2DD9DCB800A3820D /* OTPFieldView.swift */,
+				18B6CB462DDBA64F00410B46 /* ProfileDetails */,
+				18B6CB452DDBA40400410B46 /* Otp */,
+				18B6CB442DDBA3EF00410B46 /* Login */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -130,6 +140,49 @@
 				1846C8822DD9168400AEE854 /* AuthViewModel.swift */,
 			);
 			path = viewModel;
+			sourceTree = "<group>";
+		};
+		18B6CB392DDB92D500410B46 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				182FB4932DD5109D0056F573 /* Auth */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		18B6CB3A2DDB92E000410B46 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				18B6CB3B2DDB92F300410B46 /* AppConstant.swift */,
+				18B6CB3D2DDB972B00410B46 /* AppFunctions.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		18B6CB442DDBA3EF00410B46 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				182FB4892DD510810056F573 /* LoginView.swift */,
+				182FB4992DD511D10056F573 /* CountriesListView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		18B6CB452DDBA40400410B46 /* Otp */ = {
+			isa = PBXGroup;
+			children = (
+				18410F782DD9DCA500A3820D /* OtpVerifyView.swift */,
+				18410F7A2DD9DCB800A3820D /* OTPFieldView.swift */,
+			);
+			path = Otp;
+			sourceTree = "<group>";
+		};
+		18B6CB462DDBA64F00410B46 /* ProfileDetails */ = {
+			isa = PBXGroup;
+			children = (
+				18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */,
+			);
+			path = ProfileDetails;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +207,8 @@
 				1846C8752DD9126900AEE854 /* FirebaseDatabase */,
 				1846C8772DD9126900AEE854 /* FirebaseFirestore */,
 				1846C8792DD9126900AEE854 /* FirebaseStorage */,
+				18B6CB402DDB9EDB00410B46 /* NVActivityIndicatorView */,
+				18B6CB422DDB9EDB00410B46 /* NVActivityIndicatorViewExtended */,
 			);
 			productName = WhatsAppClone;
 			productReference = 180251312DD3B381009DFDD7 /* WhatsAppClone.app */;
@@ -185,6 +240,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				1846C8702DD9126900AEE854 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				18B6CB3F2DDB9EDB00410B46 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 180251322DD3B381009DFDD7 /* Products */;
@@ -202,7 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				182FB48D2DD510810056F573 /* Assets.xcassets in Resources */,
-				1846C8802DD9130400AEE854 /* GoogleService-Info.plist in Resources */,
+				82FE20EF2DDAFB790075DD5B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,8 +270,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				182FB4982DD510D40056F573 /* loginModel.swift in Sources */,
+				18B6CB3C2DDB930100410B46 /* AppConstant.swift in Sources */,
 				18410F792DD9DCA500A3820D /* OtpVerifyView.swift in Sources */,
+				18B6CB3E2DDB973200410B46 /* AppFunctions.swift in Sources */,
 				182FB49A2DD511D10056F573 /* CountriesListView.swift in Sources */,
+				18B6CB482DDBA67700410B46 /* AddProfileDetailsView.swift in Sources */,
 				182FB48E2DD510810056F573 /* ContentView.swift in Sources */,
 				18410F7B2DD9DCB800A3820D /* OTPFieldView.swift in Sources */,
 				1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */,
@@ -354,9 +413,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XJJX987WNG;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 539289LEEH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhatsAppClone/Info.plist;
@@ -371,8 +433,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = manthan.WhatsAppClone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.picturereverse.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SpaceGabWildCard;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -384,9 +448,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XJJX987WNG;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 539289LEEH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhatsAppClone/Info.plist;
@@ -401,8 +468,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = manthan.WhatsAppClone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.picturereverse.search;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SpaceGabWildCard;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -441,6 +510,14 @@
 				minimumVersion = 11.12.0;
 			};
 		};
+		18B6CB3F2DDB9EDB00410B46 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -468,6 +545,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1846C8702DD9126900AEE854 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		18B6CB402DDB9EDB00410B46 /* NVActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18B6CB3F2DDB9EDB00410B46 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorView;
+		};
+		18B6CB422DDB9EDB00410B46 /* NVActivityIndicatorViewExtended */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18B6CB3F2DDB9EDB00410B46 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorViewExtended;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

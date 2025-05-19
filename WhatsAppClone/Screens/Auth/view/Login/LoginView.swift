@@ -19,7 +19,7 @@ struct LoginView: View {
     private var authVM = AuthViewModel.shared
         
     var isValidNumber: Bool {
-        phoneNumber.count >= SelectedCountry.validNumberCount
+        phoneNumber.count == SelectedCountry.validNumberCount
     }
     
     var body: some View {
@@ -72,11 +72,13 @@ struct LoginView: View {
                     if isValidNumber{
                         let wholeNumber = "\(SelectedCountry.code)\(phoneNumber)"
                         print(wholeNumber)
+                        AppFunctions.showLoader()
                         authVM.sendOTP(to: wholeNumber) { success in
                             switch success{
                             case .success():
                                 FullPhoneNumber = wholeNumber
                                 navigateToOTP = true
+                                AppFunctions.hideLoader()
                             case .failure(_):
                                 print("invalid number")
                             }
