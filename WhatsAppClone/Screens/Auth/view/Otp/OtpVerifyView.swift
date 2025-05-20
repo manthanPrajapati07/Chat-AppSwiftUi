@@ -105,7 +105,7 @@ struct OtpVerifyView: View {
                 }
                 
                 NavigationLink(
-                    destination: AddProfileDetailsView(),
+                    destination: AddProfileDetailsView( userPhoneNumber: $phoneNumber),
                     isActive: $navigateToPtofile
                 ) {
                     EmptyView()
