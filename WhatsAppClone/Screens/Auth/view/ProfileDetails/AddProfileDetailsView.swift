@@ -13,6 +13,11 @@ struct AddProfileDetailsView: View {
     @State var userBio : String = ""
     @Binding var userPhoneNumber : String
     
+    @State private var selectedAvatar : UserAvatarsList = UserAvatarsList.arrayAvatars.first!
+    
+    @State private var showAvatarSheet = false
+
+    
     var isValid: Bool {
         !userName.isEmptyOrWhitespace()
     }
@@ -22,13 +27,22 @@ struct AddProfileDetailsView: View {
         NavigationView{
             VStack{
                 CustomNavigationBar
-                profileInfoView
-                phoneNumberView
-                BioView
-                Spacer()
+                ScrollView{
+                    VStack{
+                       // CustomNavigationBar
+                        profileInfoView
+                        phoneNumberView
+                        BioView
+                    }
+                    Spacer()
+                }
+                .sheet(isPresented: $showAvatarSheet) {
+                    AvatarSheetView(selectedAvatar: $selectedAvatar)
+                        .presentationDetents([.medium])
+                        .presentationDragIndicator(.visible)
+                }
             }
-            .background(Color(.systemGray6))
-            
+            .background(AppFunctions.avatarGradient(from: selectedAvatar).ignoresSafeArea().opacity(0.4))
         }
         .navigationBarBackButtonHidden()
         
@@ -36,8 +50,9 @@ struct AddProfileDetailsView: View {
     
     var CustomNavigationBar: some View {
         ZStack {
-            Text("Add Profile Details")
+            Text("Profile Details")
                 .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(Color(selectedAvatar.primaryFontColor))
             
             HStack{
                 Spacer()
@@ -51,15 +66,15 @@ struct AddProfileDetailsView: View {
                 .padding(.trailing)
             }
         }
-        .frame(maxHeight: 50)
-        .background(Color(.systemGray6))
+        .frame(height: 50)
+  //      .background(Color(.systemGray6))
     }
     
     
     var profileInfoView : some View {
         VStack{
             HStack{
-                Image("userProfile")
+                Image(selectedAvatar.avatarName)
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .frame(height: 80)
@@ -78,7 +93,7 @@ struct AddProfileDetailsView: View {
             
             HStack{
                 Button {
-                    
+                    showAvatarSheet = true
                 } label: {
                     Text("Add")
                         .font(.system(size: 20 ,weight: .medium))
@@ -99,7 +114,8 @@ struct AddProfileDetailsView: View {
             }
             .padding()
         }
-        .background(Color.white)
+        .background(Color.white.opacity(0.5))
+        .cornerRadius(20.0)
     }
     
     
@@ -121,8 +137,9 @@ struct AddProfileDetailsView: View {
                 
                 Spacer()
             }
-            .frame(maxHeight: 50)
-            .background(Color.white)
+            .frame(height: 50)
+            .background(Color.white.opacity(0.5))
+            .cornerRadius(10.0)
         }
         .padding(.vertical)
     }
@@ -145,8 +162,9 @@ struct AddProfileDetailsView: View {
         
                 Spacer()
             }
-            .frame(maxHeight: 50)
-            .background(Color.white)
+            .frame(height: 50)
+            .background(Color.white.opacity(0.5))
+            .cornerRadius(10.0)
         }
     }
 }

@@ -12,7 +12,7 @@
 		182FB48F2DD510810056F573 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB4892DD510810056F573 /* LoginView.swift */; };
 		182FB4902DD510810056F573 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB48A2DD510810056F573 /* SplashView.swift */; };
 		182FB4912DD510810056F573 /* WhatsAppCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB48B2DD510810056F573 /* WhatsAppCloneApp.swift */; };
-		182FB4982DD510D40056F573 /* loginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB4972DD510CC0056F573 /* loginModel.swift */; };
+		182FB4982DD510D40056F573 /* CountryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB4972DD510CC0056F573 /* CountryListModel.swift */; };
 		182FB49A2DD511D10056F573 /* CountriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB4992DD511D10056F573 /* CountriesListView.swift */; };
 		18410F792DD9DCA500A3820D /* OtpVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18410F782DD9DCA500A3820D /* OtpVerifyView.swift */; };
 		18410F7B2DD9DCB800A3820D /* OTPFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18410F7A2DD9DCB800A3820D /* OTPFieldView.swift */; };
@@ -23,6 +23,8 @@
 		1846C87A2DD9126900AEE854 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8792DD9126900AEE854 /* FirebaseStorage */; };
 		1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1846C8822DD9168400AEE854 /* AuthViewModel.swift */; };
 		187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BFCF52DDD06DA0029ED9B /* AppExtension.swift */; };
+		18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */; };
+		18809C662DDDCD650050DD23 /* UserAvatarsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */; };
 		18B6CB3C2DDB930100410B46 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6CB3B2DDB92F300410B46 /* AppConstant.swift */; };
 		18B6CB3E2DDB973200410B46 /* AppFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6CB3D2DDB972B00410B46 /* AppFunctions.swift */; };
 		18B6CB412DDB9EDB00410B46 /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6CB402DDB9EDB00410B46 /* NVActivityIndicatorView */; };
@@ -38,13 +40,15 @@
 		182FB4892DD510810056F573 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		182FB48A2DD510810056F573 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		182FB48B2DD510810056F573 /* WhatsAppCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppCloneApp.swift; sourceTree = "<group>"; };
-		182FB4972DD510CC0056F573 /* loginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginModel.swift; sourceTree = "<group>"; };
+		182FB4972DD510CC0056F573 /* CountryListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListModel.swift; sourceTree = "<group>"; };
 		182FB4992DD511D10056F573 /* CountriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListView.swift; sourceTree = "<group>"; };
 		18410F782DD9DCA500A3820D /* OtpVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVerifyView.swift; sourceTree = "<group>"; };
 		18410F7A2DD9DCB800A3820D /* OTPFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
 		1846C8812DD9158200AEE854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1846C8822DD9168400AEE854 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		187BFCF52DDD06DA0029ED9B /* AppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
+		18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSheetView.swift; sourceTree = "<group>"; };
+		18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarsModels.swift; sourceTree = "<group>"; };
 		18B6CB3B2DDB92F300410B46 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		18B6CB3D2DDB972B00410B46 /* AppFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFunctions.swift; sourceTree = "<group>"; };
 		18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileDetailsView.swift; sourceTree = "<group>"; };
@@ -121,7 +125,8 @@
 		182FB4942DD510AA0056F573 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				182FB4972DD510CC0056F573 /* loginModel.swift */,
+				182FB4972DD510CC0056F573 /* CountryListModel.swift */,
+				18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */,
+				18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */,
 			);
 			path = ProfileDetails;
 			sourceTree = "<group>";
@@ -272,15 +278,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				182FB4982DD510D40056F573 /* loginModel.swift in Sources */,
+				182FB4982DD510D40056F573 /* CountryListModel.swift in Sources */,
 				18B6CB3C2DDB930100410B46 /* AppConstant.swift in Sources */,
 				18410F792DD9DCA500A3820D /* OtpVerifyView.swift in Sources */,
 				18B6CB3E2DDB973200410B46 /* AppFunctions.swift in Sources */,
 				182FB49A2DD511D10056F573 /* CountriesListView.swift in Sources */,
 				18B6CB482DDBA67700410B46 /* AddProfileDetailsView.swift in Sources */,
+				18809C662DDDCD650050DD23 /* UserAvatarsModels.swift in Sources */,
 				182FB48E2DD510810056F573 /* ContentView.swift in Sources */,
 				18410F7B2DD9DCB800A3820D /* OTPFieldView.swift in Sources */,
 				1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */,
+				18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */,
 				182FB48F2DD510810056F573 /* LoginView.swift in Sources */,
 				187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */,
 				182FB4902DD510810056F573 /* SplashView.swift in Sources */,
@@ -431,7 +439,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,7 +474,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -6,6 +6,7 @@
 //
 import UIKit
 import NVActivityIndicatorView
+import SwiftUICore
 
 final class AppFunctions{
     
@@ -25,7 +26,7 @@ final class AppFunctions{
             window.addSubview(progressView)
             progressView.alpha = 0.0
             progressView.tag = 1020
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.2) {
                 progressView.alpha = 1.1
             }
             
@@ -54,6 +55,20 @@ final class AppFunctions{
         }
     }
     
-    
+    static func avatarGradient(from avatar: UserAvatarsList) -> LinearGradient {
+        return LinearGradient(
+            gradient: Gradient(colors: [
+                Color(hex: avatar.avatarColor1),
+                Color(hex: avatar.avatarColor2)
+            ]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+////
+//    class func avatarGradient(from avatar: UserAvatarsList) -> Color {
+//        return Color(.red)
+//        
+//    }
 }
 
