@@ -13,6 +13,7 @@ struct LoginView: View {
     @State var SelectedCountry = Country(name: "India", code: "+91", validNumberCount: 10)
     @State private var previousCountry: Country? = Country(name: "India", code: "+91", validNumberCount: 10)
     @State private var FullPhoneNumber = ""
+    @State private var userModel : User!
     @State private var navigateToOTP = false
     
     
@@ -75,7 +76,7 @@ struct LoginView: View {
                         AppFunctions.showLoader()
                         authVM.sendOTP(to: wholeNumber) { success in
                             switch success{
-                            case .success():
+                            case .success(let success):
                                 FullPhoneNumber = wholeNumber
                                 navigateToOTP = true
                                 AppFunctions.hideLoader()
