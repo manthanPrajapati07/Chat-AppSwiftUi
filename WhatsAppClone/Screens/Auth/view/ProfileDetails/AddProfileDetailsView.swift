@@ -9,14 +9,13 @@ import SwiftUI
 
 struct AddProfileDetailsView: View {
     
+    @Binding var userPhoneNumber : String
     @State var userName : String = ""
     @State var userBio : String = ""
-    @Binding var userPhoneNumber : String
-    
     @State private var selectedAvatar : UserAvatarsList = UserAvatarsList.arrayAvatars.first!
-    
     @State private var showAvatarSheet = false
 
+    var authVM = AuthViewModel.shared
     
     var isValid: Bool {
         !userName.isEmptyOrWhitespace()
@@ -29,7 +28,6 @@ struct AddProfileDetailsView: View {
                 CustomNavigationBar
                 ScrollView{
                     VStack{
-                       // CustomNavigationBar
                         profileInfoView
                         phoneNumberView
                         BioView
@@ -57,7 +55,18 @@ struct AddProfileDetailsView: View {
             HStack{
                 Spacer()
                 Button {
-                    
+                    if isValid{
+                        Task{
+                           await authVM.userEntryInFireStore(userPhone: userPhoneNumber, userName: userName, userAvatar: selectedAvatar.avatarName, UserBio: userBio) { success in
+                               switch success{
+                               case .success(_):
+                                   print("user added")
+                               case .failure(let error):
+                                   print(error)
+                               }
+                            }
+                        }
+                    }
                 } label: {
                     Text("Done")
                         .font(.system(size: 20, weight: .regular))
@@ -67,7 +76,6 @@ struct AddProfileDetailsView: View {
             }
         }
         .frame(height: 50)
-  //      .background(Color(.systemGray6))
     }
     
     

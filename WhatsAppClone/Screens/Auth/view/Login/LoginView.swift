@@ -59,7 +59,19 @@ struct LoginView: View {
         }
         .ignoresSafeArea()
         
-        
+        .onReceive(AuthViewModel.shared.$numberVerifiedState) { state in
+            switch state{
+                
+            case .numberVerified:
+                navigateToOTP = true
+                AppFunctions.hideLoader()
+            case .error(let error):
+                AppFunctions.hideLoader()
+                print(error)
+            case .inActive:
+                print("")
+            }
+        }
     }
     
     
@@ -72,18 +84,12 @@ struct LoginView: View {
                 Button {
                     if isValidNumber{
                         let wholeNumber = "\(SelectedCountry.code)\(phoneNumber)"
+                        FullPhoneNumber = wholeNumber
                         print(wholeNumber)
+                        
                         AppFunctions.showLoader()
-                        authVM.sendOTP(to: wholeNumber) { success in
-                            switch success{
-                            case .success(let success):
-                                FullPhoneNumber = wholeNumber
-                                navigateToOTP = true
-                                AppFunctions.hideLoader()
-                            case .failure(_):
-                                print("invalid number")
-                            }
-                        }
+                        authVM.sendOTP(to: wholeNumber)
+                    
                     }
                 } label: {
                     Text("Done")

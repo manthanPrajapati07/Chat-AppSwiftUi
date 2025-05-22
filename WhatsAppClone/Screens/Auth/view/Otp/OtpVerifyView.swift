@@ -64,16 +64,7 @@ struct OtpVerifyView: View {
                         
                         Button {
                             AppFunctions.showLoader()
-                            authVM.sendOTP(to: phoneNumber) { success in
-                                switch success{
-                                case .success():
-                                    AppFunctions.hideLoader()
-                                    startTimer()
-                                    print("otp Sended again")
-                                case .failure(_):
-                                    print("invalid number")
-                                }
-                            }
+                            authVM.sendOTP(to: phoneNumber)
                         } label: {
                             Text("Resend")
                                 .font(.system(size: 16, weight: .medium))
@@ -102,6 +93,37 @@ struct OtpVerifyView: View {
                     
                     
                     Spacer()
+                }
+                
+                .onReceive(authVM.$numberVerifiedState, perform: { state in
+                    switch state{
+                        
+                    case .inActive: print("")
+                            
+                    case .numberVerified:
+                        AppFunctions.hideLoader()
+                        startTimer()
+                    case .error(let error):
+                        print(error)
+                    }
+                })
+                
+                .onReceive(authVM.$authState) { state in
+                    switch state{
+                      
+                    case .newUser:
+                        navigateToPtofile = true
+                        AppFunctions.hideLoader()
+                        
+                    case .existingUser:
+                        AppFunctions.hideLoader()
+                        
+                    case .error(let error):
+                        AppFunctions.hideLoader()
+                        print(error)
+                    case .inActive:
+                        print("")
+                    }
                 }
                 
                 NavigationLink(
@@ -149,20 +171,7 @@ struct OtpVerifyView: View {
                 .onChange(of: otp) { newOtp in
                     if newOtp.count == 6 {
                         AppFunctions.showLoader()
-                        authVM.verifyOTP(otp) { success in
-                            switch success{
-                                
-                            case .success(_):
-                                navigateToPtofile = true
-                                AppFunctions.hideLoader()
-                                print("otp verified")
-                                break
-                                
-                            case .failure(_):
-                                print("otp Filed")
-                                break
-                            }
-                        }
+                        authVM.verifyOTP(otp)
                     }
                 }
                 .focused($isOTPFieldFocused)
