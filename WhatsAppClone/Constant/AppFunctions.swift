@@ -16,7 +16,6 @@ final class AppFunctions{
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: completion)
     }
     
-    
     class func showLoader() {
         if let window = UIApplication.shared.connectedScenes
             .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first{
@@ -65,10 +64,5 @@ final class AppFunctions{
             endPoint: .bottomTrailing
         )
     }
-////
-//    class func avatarGradient(from avatar: UserAvatarsList) -> Color {
-//        return Color(.red)
-//        
-//    }
 }
 

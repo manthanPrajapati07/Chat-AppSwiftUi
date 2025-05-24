@@ -83,7 +83,7 @@ final class AuthViewModel{
                     return
                 }
                 
-                 let uid = authResult.user.uid
+                let uid = authResult.user.uid
                 self.userUid = uid
                 
                 self.checkUserExist(with: uid) { exist in
@@ -107,7 +107,7 @@ final class AuthViewModel{
         }
     }
     
-    func userEntryInFireStore(userPhone :String, userName : String, userAvatar : String, UserBio : String, completion: @escaping (Result<String, AuthError>) -> Void) async {
+    func userEntryInFireStore(userPhone :String, userName : String, userAvatar : String, UserBio : String, completion: @escaping (Result<String, Error>) -> Void) async {
         
        let user = User(id: userUid, userName: userName, userPhone: userPhone, userBio: UserBio, userAvatar: userAvatar)
         
@@ -115,7 +115,7 @@ final class AuthViewModel{
             try await db.collection("User").document(user.id).setData(user.dictionary)
             completion(.success("success"))
         } catch {
-            completion(.failure(.errorFirestore))
+            completion(.failure(AuthError.errorFirestore))
         }
     }
     

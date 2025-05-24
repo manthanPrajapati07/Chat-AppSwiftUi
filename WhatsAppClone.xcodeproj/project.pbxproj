@@ -22,6 +22,7 @@
 		1846C8782DD9126900AEE854 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8772DD9126900AEE854 /* FirebaseFirestore */; };
 		1846C87A2DD9126900AEE854 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8792DD9126900AEE854 /* FirebaseStorage */; };
 		1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1846C8822DD9168400AEE854 /* AuthViewModel.swift */; };
+		186FEC402DE20EF5008647FD /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */; };
 		187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BFCF52DDD06DA0029ED9B /* AppExtension.swift */; };
 		18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */; };
 		18809C662DDDCD650050DD23 /* UserAvatarsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */; };
@@ -47,6 +48,7 @@
 		18410F7A2DD9DCB800A3820D /* OTPFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
 		1846C8812DD9158200AEE854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1846C8822DD9168400AEE854 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		187BFCF52DDD06DA0029ED9B /* AppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
 		18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSheetView.swift; sourceTree = "<group>"; };
 		18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarsModels.swift; sourceTree = "<group>"; };
@@ -152,9 +154,42 @@
 			path = viewModel;
 			sourceTree = "<group>";
 		};
+		186FEC3B2DE20C12008647FD /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				186FEC3E2DE20C38008647FD /* viewModel */,
+				186FEC3D2DE20C2F008647FD /* view */,
+				186FEC3C2DE20C1E008647FD /* model */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		186FEC3C2DE20C1E008647FD /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		186FEC3D2DE20C2F008647FD /* view */ = {
+			isa = PBXGroup;
+			children = (
+				186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		186FEC3E2DE20C38008647FD /* viewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = viewModel;
+			sourceTree = "<group>";
+		};
 		18B6CB392DDB92D500410B46 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				186FEC3B2DE20C12008647FD /* Home */,
 				182FB4932DD5109D0056F573 /* Auth */,
 			);
 			path = Screens;
@@ -288,6 +323,7 @@
 				182FB49A2DD511D10056F573 /* CountriesListView.swift in Sources */,
 				18B6CB482DDBA67700410B46 /* AddProfileDetailsView.swift in Sources */,
 				18809C662DDDCD650050DD23 /* UserAvatarsModels.swift in Sources */,
+				186FEC402DE20EF5008647FD /* HomeScreenView.swift in Sources */,
 				182FB48E2DD510810056F573 /* ContentView.swift in Sources */,
 				18410F7B2DD9DCB800A3820D /* OTPFieldView.swift in Sources */,
 				1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */,

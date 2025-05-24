@@ -15,6 +15,7 @@ extension String {
         return self.trimmingCharacters(in: .whitespaces).isEmpty
     }
 }
+
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
