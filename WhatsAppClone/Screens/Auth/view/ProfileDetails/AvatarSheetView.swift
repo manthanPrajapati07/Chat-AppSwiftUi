@@ -14,7 +14,7 @@ struct AvatarSheetView: View {
     
     @Environment(\.dismiss) private var dismiss
 
-    @Binding var selectedAvatar : UserAvatarsList
+    @Binding var selectedAvatar : UserAvatarsList?
     
     var body: some View {
         NavigationView{

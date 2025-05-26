@@ -9,11 +9,16 @@ import FirebaseAuth
 import FirebaseFirestore
 import Combine
 
-final class AuthViewModel{
+@MainActor
+final class AuthViewModel: ObservableObject{
     
     static var shared = AuthViewModel()
     
-    private init(){}
+    private init(){
+        Task{
+            await loadCurrentUser()
+        }
+    }
     
     enum AuthError: Error {
         case somethingWrong
@@ -23,99 +28,228 @@ final class AuthViewModel{
         case errorFirestore
     }
     
-    enum AuthState {
-           case inActive
-           case newUser
-           case existingUser
-           case error(AuthError)
-       }
-    
-    enum numberVerifiedState {
-           case inActive
-           case numberVerified
-           case error(AuthError)
-       }
-
     var verificationID: String?
-    let db = Firestore.firestore()
     var userUid : String = ""
+    var userPhone : String = ""
     
-    @Published var authState: AuthState = .inActive
-    @Published var numberVerifiedState : numberVerifiedState = .inActive
+    @Published var currentUser : User?
+    @Published var firebaseUser : FirebaseAuth.User?
+    @Published var userAvatar = UserAvatarsList.arrayAvatars.first
+    @Published var isNewUser: Bool = true
+    @Published var isNumberVerified : Bool = false
     
-    func sendOTP(to phoneNumber: String){
-            PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
-                guard let self else {return}
-                if let error = error {
-                    print("Error sending OTP: \(error.localizedDescription)")
-                    self.numberVerifiedState = .error(.somethingWrong)
-                    return
-                }
-
-                guard let verificationID = verificationID else {
-                    self.numberVerifiedState = .error(.invalidVerification)
-                    return
-                }
-
-                self.verificationID = verificationID
-                self.numberVerifiedState = .numberVerified
-            }
-        }
+    private let auth = Auth.auth()
     
-    
-    func verifyOTP(_ code: String) {
-            guard let verificationID = verificationID else {
-                authState = .error(.invalidVerification)
-                return
-            }
-
-            let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: code)
-
-            Auth.auth().signIn(with: credential) { authResult, error in
-                if let error = error {
-                    print("OTP verification failed: \(error.localizedDescription)")
-                    self.authState = .error(.invalidOtp)
-                    return
-                }
-
-                guard let authResult = authResult else {
-                    self.authState = .error(.unknown)
-                    return
-                }
-                
-                let uid = authResult.user.uid
-                self.userUid = uid
-                
-                self.checkUserExist(with: uid) { exist in
-                    if exist{
-                        self.authState = .existingUser
-                    }else{
-                        self.authState = .newUser
+    func loadCurrentUser() async{
+        if let user = auth.currentUser{
+            Task{
+                await fatchUserDetail(with: user.uid){ userData in
+                    switch userData {
+                    case .success(let userDetails):
+                        self.currentUser = userDetails
+                        fatchAvatarsDetails(with: self.currentUser!.userAvatar) { avatar in
+                            switch avatar{
+                            case .success(let userAvatar):
+                                self.userAvatar = userAvatar
+                                self.firebaseUser = user
+                            case .failure(_):
+                                firebaseUser = nil
+                                userAvatar = nil
+                            }
+                        }
+                    case .failure(_):
+                        firebaseUser = nil
+                        userAvatar = nil
+                        self.currentUser = nil
                     }
                 }
-                  
-            }
-        }
-    
-    func checkUserExist(with uid: String, completion : @escaping (Bool)-> Void){
-        db.collection("User").document(uid).getDocument { document, error in
-            if let document = document, document.exists{
-                completion(true)
-            }else{
-                completion(false)
             }
         }
     }
     
-    func userEntryInFireStore(userPhone :String, userName : String, userAvatar : String, UserBio : String, completion: @escaping (Result<String, Error>) -> Void) async {
+    func sendOTP(to phoneNumber: String){
+        AppFunctions.showLoader()
+        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
+            guard let self else {return}
+            AppFunctions.hideLoader()
+            if let error = error {
+                print("Error sending OTP: \(error.localizedDescription)")
+                self.isNumberVerified = false
+                return
+            }
+            
+            guard let verificationID = verificationID else {
+                self.isNumberVerified = false
+                return
+            }
+            
+            self.verificationID = verificationID
+            self.userPhone = phoneNumber
+            self.isNumberVerified = true
+        }
+    }
+    
+    
+    func verifyOTP(_ code: String) {
+        AppFunctions.showLoader()
+        guard let verificationID = verificationID else {
+            return
+        }
         
-       let user = User(id: userUid, userName: userName, userPhone: userPhone, userBio: UserBio, userAvatar: userAvatar)
+        let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: code)
         
+        Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+            
+            guard let self else {return}
+            AppFunctions.hideLoader()
+            if let error = error {
+                print("OTP verification failed: \(error.localizedDescription)")
+                return
+            }
+            guard let authResult = authResult else {
+                return
+            }
+            
+          
+            let uid = authResult.user.uid
+            print(uid)
+            
+            Task{
+                await self.fatchUserDetail(with: uid) { users in
+                    switch users{
+                    case .success(let user):
+                        self.currentUser = user
+                        self.fatchAvatarsDetails(with: user.userAvatar){ avatar in
+                            switch avatar{
+                            case .success(let avatar):
+                                self.userAvatar = avatar
+                                self.firebaseUser = authResult.user
+                            case .failure(let error):
+                                self.userAvatar = nil
+                                self.firebaseUser = nil
+                            }
+                        }
+                        
+                    case .failure(let notExist):
+                        Task{
+                            await self.userEntryInFireStore(userUid: uid, userName: "_", UserBio: "_"){ added in
+                                if added{
+                                    Task{
+                                        await self.fatchUserDetail(with: uid) { users in
+                                            switch users{
+                                            case .success(let user):
+                                                self.currentUser = user
+                                                self.fatchAvatarsDetails(with: user.userAvatar){ avatar in
+                                                    switch avatar{
+                                                    case .success(let avatar):
+                                                        self.userAvatar = avatar
+                                                        self.firebaseUser = authResult.user
+                                                    case .failure(let error):
+                                                        self.userAvatar = nil
+                                                        self.firebaseUser = nil
+                                                    }
+                                                }
+                                            
+                                            case .failure(let error):
+                                                print(error)
+                                                self.firebaseUser = nil
+                                                self.currentUser = nil
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func fatchUserDetail(with uid: String, completion: ((Result<User, Error>)) -> Void) async{
+        do{
+            let document = try await db.collection("User").document(uid).getDocument()
+            let user = try document.data(as: User.self)
+            completion(.success(user))
+        }catch{
+            completion(.failure(AuthError.somethingWrong))
+            currentUser = nil
+        }
+    }
+    
+    func fatchAvatarsDetails(with avatarName:String, completion: (Result<UserAvatarsList, Error>) -> ()){
+        if let avatar = UserAvatarsList.arrayAvatars.first(where: {$0.avatarName == avatarName}){
+            completion(.success(avatar))
+//            userAvatar = avatar
+           // self.firebaseUser = user
+        }else{
+            completion(.failure(AuthError.unknown))
+            userAvatar = nil
+            self.firebaseUser = nil
+        }
+    }
+    
+    func userEntryInFireStore(userUid : String ,userName : String, UserBio : String, completion : (Bool) -> ()) async {
+        AppFunctions.showLoader()
+        let user = User(userName: userName, userPhone: userPhone, userBio: UserBio, userAvatar: userAvatar?.avatarName ?? "userAvatar1")
+        print(user)
+        AppFunctions.hideLoader()
         do {
-            try await db.collection("User").document(user.id).setData(user.dictionary)
-            completion(.success("success"))
+            try db.collection("User").document(userUid).setData(from: user)
+            completion(true)
         } catch {
-            completion(.failure(AuthError.errorFirestore))
+            completion(false)
+        }
+    }
+    
+    func updateEntryInFireStore(userName : String, UserBio : String) async {
+        AppFunctions.showLoader()
+        let user = User(userName: userName, userPhone: userPhone, userBio: UserBio, userAvatar: userAvatar?.avatarName ?? "userAvatar1")
+        
+        let updatedData: [String: Any] = [
+                "userName": userName,
+                "userBio": UserBio,
+                "userAvatar": userAvatar?.avatarName ?? ""
+            ]
+        do {
+            try await db.collection("User").document(firebaseUser!.uid).updateData(updatedData)
+            AppFunctions.hideLoader()
+            
+            await fatchUserDetail(with: firebaseUser?.uid ?? "") { userDetails in
+                switch userDetails{
+                case .success(let userData):
+                    fatchAvatarsDetails(with: userData.userAvatar) { userAvatarDetails in
+                        switch userAvatarDetails {
+                        case .success(let avatar):
+                            self.userAvatar = avatar
+                            currentUser = userData
+                        case .failure(_):
+                            self.userAvatar = nil
+                            self.currentUser = nil
+                            self.firebaseUser = nil
+                        }
+                    }
+                case .failure(_):
+                    currentUser = nil
+                    firebaseUser = nil
+                }
+            }
+        
+        } catch {
+            firebaseUser = nil
+            currentUser = nil
+            AppFunctions.hideLoader()
+        }
+    }
+    
+    func signOut() {
+        do {
+            firebaseUser = nil
+            currentUser = nil
+            isNumberVerified = false
+            try auth.signOut()
+        }catch {
+           
         }
     }
     

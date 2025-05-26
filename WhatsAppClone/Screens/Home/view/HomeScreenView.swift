@@ -11,12 +11,22 @@ struct HomeScreenView: View {
     
     @State var homeVM = HomeViewModel.shared
     @State var selectedValue : String = "Explore"
+    
+    @EnvironmentObject var authVM : AuthViewModel
 
     
     var body: some View {
         NavigationStack{
             VStack{
                 customNavBarView
+                
+                Text(authVM.currentUser?.userName ?? "hello")
+                Button {
+                    authVM.signOut()
+                } label: {
+                    Text("Sign Out")
+                }
+
                 customSegment(with: homeVM.segmentArrey, selected: selectedValue)
                     .padding(.horizontal, 10)
                 Spacer()

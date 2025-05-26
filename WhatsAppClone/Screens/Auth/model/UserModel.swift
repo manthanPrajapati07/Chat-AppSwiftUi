@@ -7,17 +7,9 @@
 
 import Foundation
 
-struct User : Identifiable {
-    let id : String
+struct User : Codable, Equatable {
     let userName : String
     let userPhone : String
     let userBio : String
     let userAvatar : String
-    
-    var dictionary : [String : Any] {
-        return ["userName": userName,
-                "userPhone": userPhone,
-                "userBio": userBio,
-                "userAvatar": userAvatar]
-    }
 }

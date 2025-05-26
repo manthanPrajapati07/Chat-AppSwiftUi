@@ -14,12 +14,12 @@ struct OtpVerifyView: View {
     @State private var timer : Timer?
     @State private var remainingTime = 60
     @State private var isResendtimer : Bool = false
-    private var authVM = AuthViewModel.shared
+    @EnvironmentObject var authVM : AuthViewModel
     @Binding var phoneNumber : String
-    
-    @State private var navigateToPtofile = false
-    
     @Environment(\.dismiss) private var dismiss
+    
+    @State private var navigateToAddProfile = false
+    @State private var navigateToHome = false
     
     var formattedTime: String {
         let minutes = remainingTime / 60
@@ -63,8 +63,9 @@ struct OtpVerifyView: View {
                             .foregroundStyle(Color.gray)
                         
                         Button {
-                            AppFunctions.showLoader()
+//                            AppFunctions.showLoader()
                             authVM.sendOTP(to: phoneNumber)
+                            startTimer()
                         } label: {
                             Text("Resend")
                                 .font(.system(size: 16, weight: .medium))
@@ -95,51 +96,38 @@ struct OtpVerifyView: View {
                     Spacer()
                 }
                 
-                .onReceive(authVM.$numberVerifiedState, perform: { state in
-                    switch state{
-                        
-                    case .inActive: print("")
-                            
-                    case .numberVerified:
-                        AppFunctions.hideLoader()
-                        startTimer()
-                    case .error(let error):
-                        print(error)
-                    }
-                })
-                
-                .onReceive(authVM.$authState) { state in
-                    switch state{
-                      
-                    case .newUser:
-                        navigateToPtofile = true
-                        AppFunctions.hideLoader()
-                        
-                    case .existingUser:
-                        AppFunctions.hideLoader()
-                        
-                    case .error(let error):
-                        AppFunctions.hideLoader()
-                        print(error)
-                    case .inActive:
-                        print("")
-                    }
-                }
-                
-                NavigationLink(
-                    destination: AddProfileDetailsView( userPhoneNumber: $phoneNumber),
-                    isActive: $navigateToPtofile
-                ) {
-                    EmptyView()
-                }
-                .padding()
-            
                 .onAppear {
                     startTimer()
                 }
             }
         }
         .navigationBarBackButtonHidden()
+//        .onChange(of: authVM.isNewUser) { isNew in
+//            if isNew {
+//                navigateToAddProfile = true
+//                navigateToHome = false
+//            } else {
+//                navigateToAddProfile = false
+//                navigateToHome = true
+//            }
+//        }
+//        
+//        NavigationLink(
+//            destination: AddProfileDetailsView(),
+//            isActive: $navigateToAddProfile
+//        ) {
+//            EmptyView()
+//        }
+//        .padding()
+//        
+//        NavigationLink(
+//            destination: HomeScreenView(),
+//            isActive: $navigateToHome
+//        ) {
+//            EmptyView()
+//        }
+//        .padding()
+//        .environmentObject(authVM)
     }
     
     var CustomNavigationBar: some View {
@@ -170,7 +158,6 @@ struct OtpVerifyView: View {
             OTPFieldView(numberOfFields: 6, otp: $otp)
                 .onChange(of: otp) { newOtp in
                     if newOtp.count == 6 {
-                        AppFunctions.showLoader()
                         authVM.verifyOTP(otp)
                     }
                 }

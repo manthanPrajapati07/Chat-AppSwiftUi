@@ -10,11 +10,18 @@ import SwiftUI
 struct ContentView: View {
     
     @State var isActive : Bool = false
-    
+    @EnvironmentObject var authVM : AuthViewModel
     var body: some View {
         VStack {
             if isActive{
-                LoginView()
+                if authVM.firebaseUser == nil{
+                    LoginView()
+                        .environmentObject(authVM)
+                }else{
+                    AddProfileDetailsView()
+                        .environmentObject(authVM)
+                }
+                
             }else{
                 SplashView()
             }

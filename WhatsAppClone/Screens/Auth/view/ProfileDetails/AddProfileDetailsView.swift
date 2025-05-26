@@ -9,62 +9,64 @@ import SwiftUI
 
 struct AddProfileDetailsView: View {
     
-    @Binding var userPhoneNumber : String
+//    @Binding var userPhoneNumber : String
     @State var userName : String = ""
     @State var userBio : String = ""
-    @State private var selectedAvatar : UserAvatarsList = UserAvatarsList.arrayAvatars.first!
     @State private var showAvatarSheet = false
-
-    var authVM = AuthViewModel.shared
+    @EnvironmentObject var authVM : AuthViewModel
     
     var isValid: Bool {
         !userName.isEmptyOrWhitespace()
     }
+    
+    @State private var navigateToHome : Bool = false
         
     
     var body: some View {
         NavigationView{
-            VStack{
-                CustomNavigationBar
-                ScrollView{
-                    VStack{
-                        profileInfoView
-                        phoneNumberView
-                        BioView
+                VStack{
+                    CustomNavigationBar
+                    ScrollView{
+                        VStack{
+                            profileInfoView
+                            phoneNumberView
+                            BioView
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    .sheet(isPresented: $showAvatarSheet) {
+                        AvatarSheetView(selectedAvatar: $authVM.userAvatar)
+                            .presentationDetents([.medium])
+                            .presentationDragIndicator(.visible)
+                    }
+
                 }
-                .sheet(isPresented: $showAvatarSheet) {
-                    AvatarSheetView(selectedAvatar: $selectedAvatar)
-                        .presentationDetents([.medium])
-                        .presentationDragIndicator(.visible)
-                }
+                .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
+        
+            NavigationLink(
+                destination: HomeScreenView(),
+                isActive: $navigateToHome
+            ) {
+                EmptyView()
             }
-            .background(AppFunctions.avatarGradient(from: selectedAvatar).ignoresSafeArea().opacity(0.4))
+            .environmentObject(authVM)
+            
         }
         .navigationBarBackButtonHidden()
-        
     }
     
     var CustomNavigationBar: some View {
         ZStack {
             Text("Profile Details")
                 .font(.system(size: 20, weight: .semibold))
-                .foregroundStyle(Color(selectedAvatar.primaryFontColor))
+                .foregroundStyle(Color(authVM.userAvatar!.primaryFontColor))
             
             HStack{
                 Spacer()
                 Button {
                     if isValid{
                         Task{
-                           await authVM.userEntryInFireStore(userPhone: userPhoneNumber, userName: userName, userAvatar: selectedAvatar.avatarName, UserBio: userBio) { success in
-                               switch success{
-                               case .success(_):
-                                   print("user added")
-                               case .failure(let error):
-                                   print(error)
-                               }
-                            }
+                           await authVM.updateEntryInFireStore(userName: userName, UserBio: userBio)
                         }
                     }
                 } label: {
@@ -82,7 +84,7 @@ struct AddProfileDetailsView: View {
     var profileInfoView : some View {
         VStack{
             HStack{
-                Image(selectedAvatar.avatarName)
+                Image(authVM.userAvatar!.avatarName)
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .frame(height: 80)
@@ -138,7 +140,7 @@ struct AddProfileDetailsView: View {
             .padding(.horizontal)
             
             HStack{
-                Text(userPhoneNumber)
+                Text(authVM.currentUser?.userPhone ?? "")
                     .font(.system(size: 20, weight: .medium))
                     .foregroundStyle(Color.black)
                     .padding(.horizontal)
@@ -178,5 +180,5 @@ struct AddProfileDetailsView: View {
 }
 
 #Preview {
-    AddProfileDetailsView(userPhoneNumber: .constant("+91 7201035861"))
+    AddProfileDetailsView()
 }

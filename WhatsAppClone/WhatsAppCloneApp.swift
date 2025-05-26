@@ -35,9 +35,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct WhatsAppCloneApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    @StateObject var authVM = AuthViewModel.shared
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
+        .environmentObject(authVM)
     }
 }

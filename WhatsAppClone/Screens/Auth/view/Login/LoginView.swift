@@ -14,10 +14,9 @@ struct LoginView: View {
     @State private var previousCountry: Country? = Country(name: "India", code: "+91", validNumberCount: 10)
     @State private var FullPhoneNumber = ""
     @State private var userModel : User!
-    @State private var navigateToOTP = false
     
     
-    private var authVM = AuthViewModel.shared
+    @EnvironmentObject var authVM : AuthViewModel
         
     var isValidNumber: Bool {
         phoneNumber.count == SelectedCountry.validNumberCount
@@ -44,7 +43,7 @@ struct LoginView: View {
                 
                 NavigationLink(
                     destination: OtpVerifyView(phoneNumber: $FullPhoneNumber),
-                    isActive: $navigateToOTP
+                    isActive: $authVM.isNumberVerified
                 ) {
                     EmptyView()
                 }
@@ -58,20 +57,6 @@ struct LoginView: View {
             previousCountry = newValue
         }
         .ignoresSafeArea()
-        
-        .onReceive(AuthViewModel.shared.$numberVerifiedState) { state in
-            switch state{
-                
-            case .numberVerified:
-                navigateToOTP = true
-                AppFunctions.hideLoader()
-            case .error(let error):
-                AppFunctions.hideLoader()
-                print(error)
-            case .inActive:
-                print("")
-            }
-        }
     }
     
     
@@ -86,10 +71,7 @@ struct LoginView: View {
                         let wholeNumber = "\(SelectedCountry.code)\(phoneNumber)"
                         FullPhoneNumber = wholeNumber
                         print(wholeNumber)
-                        
-                        AppFunctions.showLoader()
                         authVM.sendOTP(to: wholeNumber)
-                    
                     }
                 } label: {
                     Text("Done")
