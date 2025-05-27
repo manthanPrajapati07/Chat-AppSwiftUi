@@ -29,7 +29,12 @@ struct HomeScreenView: View {
 
                 customSegment(with: homeVM.segmentArrey, selected: selectedValue)
                     .padding(.horizontal, 10)
+                
                 Spacer()
+                
+                customTabBar
+                    .padding()
+                   
             }
             .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
         }
@@ -88,7 +93,38 @@ struct HomeScreenView: View {
         }
     }
     
-
+    var customTabBar : some View{
+        GeometryReader{ geometry in
+            HStack(spacing: 0.0){
+                Button {
+                    
+                } label: {
+                    Image("chat_unfill_icn")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .frame(height: 35)
+                }
+                .frame(width: geometry.size.width * 0.5)
+                
+//                Spacer()
+                Button {
+                    
+                } label: {
+                    Image("setting_unfill_icn")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .frame(height: 35)
+                }
+                .frame(width: geometry.size.width * 0.5)
+                
+            }
+            .frame(height: 50)
+            .background(Color.white.opacity(0.4))
+            .cornerRadius(geometry.size.height/2)
+            
+        }
+        
+    }
     
 }
 
