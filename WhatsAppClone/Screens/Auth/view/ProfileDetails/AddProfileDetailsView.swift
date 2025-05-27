@@ -19,7 +19,7 @@ struct AddProfileDetailsView: View {
         !userName.isEmptyOrWhitespace()
     }
     
-    @State private var navigateToHome : Bool = false
+   // @State private var navigateToHome : Bool = false
         
     
     var body: some View {
@@ -39,18 +39,24 @@ struct AddProfileDetailsView: View {
                             .presentationDetents([.medium])
                             .presentationDragIndicator(.visible)
                     }
+                    
+//                    NavigationLink(
+//                        destination: HomeScreenView(),
+//                        isActive: $navigateToHome
+//                    ) {
+//                        EmptyView()
+//                    }
+//                    .environmentObject(authVM)
+                    
 
                 }
                 .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
+//                .onChange(of: authVM.currentUser!) { oldValue, newValue in
+//                    if newValue.userName != oldValue.userName{
+//                        navigateToHome = true
+//                    }
+//                }
         
-            NavigationLink(
-                destination: HomeScreenView(),
-                isActive: $navigateToHome
-            ) {
-                EmptyView()
-            }
-            .environmentObject(authVM)
-            
         }
         .navigationBarBackButtonHidden()
     }

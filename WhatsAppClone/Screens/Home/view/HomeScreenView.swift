@@ -12,7 +12,7 @@ struct HomeScreenView: View {
     @State var homeVM = HomeViewModel.shared
     @State var selectedValue : String = "Explore"
     
-    @EnvironmentObject var authVM : AuthViewModel
+    @StateObject var authVM = AuthViewModel.shared
 
     
     var body: some View {
@@ -31,6 +31,7 @@ struct HomeScreenView: View {
                     .padding(.horizontal, 10)
                 Spacer()
             }
+            .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
         }
     }
     
@@ -44,7 +45,7 @@ struct HomeScreenView: View {
             }
         }
         .frame(height: 30)
-        .background(Color(.systemGray6))
+       // .background(Color(.systemGray6))
     }
     
     private func customSegment(with tabs:[String], selected: String) -> some View{
@@ -82,13 +83,16 @@ struct HomeScreenView: View {
                 }
             }
             .frame(height: 50)
-            .background(Color(uiColor: .systemGray6))
+            .background(Color(uiColor: .systemGray6).opacity(0.5))
             .cornerRadius(geometry.size.height / 2)
         }
     }
+    
+
     
 }
 
 #Preview {
     HomeScreenView()
+    
 }

@@ -42,7 +42,6 @@ final class AuthViewModel: ObservableObject{
     
     func loadCurrentUser() async{
         if let user = auth.currentUser{
-            Task{
                 await fatchUserDetail(with: user.uid){ userData in
                     switch userData {
                     case .success(let userDetails):
@@ -63,7 +62,6 @@ final class AuthViewModel: ObservableObject{
                         self.currentUser = nil
                     }
                 }
-            }
         }
     }
     
@@ -124,15 +122,15 @@ final class AuthViewModel: ObservableObject{
                             case .success(let avatar):
                                 self.userAvatar = avatar
                                 self.firebaseUser = authResult.user
-                            case .failure(let error):
+                            case .failure(_):
                                 self.userAvatar = nil
                                 self.firebaseUser = nil
                             }
                         }
                         
-                    case .failure(let notExist):
+                    case .failure(_):
                         Task{
-                            await self.userEntryInFireStore(userUid: uid, userName: "_", UserBio: "_"){ added in
+                            await self.userEntryInFireStore(userUid: uid, userName: "", UserBio: ""){ added in
                                 if added{
                                     Task{
                                         await self.fatchUserDetail(with: uid) { users in

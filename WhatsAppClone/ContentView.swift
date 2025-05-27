@@ -18,8 +18,14 @@ struct ContentView: View {
                     LoginView()
                         .environmentObject(authVM)
                 }else{
-                    AddProfileDetailsView()
-                        .environmentObject(authVM)
+                    if authVM.currentUser?.userName.isEmptyOrWhitespace() ?? true{
+                        AddProfileDetailsView()
+                            .environmentObject(authVM)
+                    }else{
+                        HomeScreenView()
+                            .environmentObject(authVM)
+                    }
+                   
                 }
                 
             }else{
