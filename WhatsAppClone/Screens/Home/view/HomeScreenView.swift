@@ -13,6 +13,8 @@ struct HomeScreenView: View {
     @State var selectedValue : String = "Explore"
     
     @StateObject var authVM = AuthViewModel.shared
+    
+    @State var isChatSelected : Bool = true
 
     
     var body: some View {
@@ -93,39 +95,37 @@ struct HomeScreenView: View {
         }
     }
     
-    var customTabBar : some View{
-        GeometryReader{ geometry in
-            HStack(spacing: 0.0){
-                Button {
-                    
-                } label: {
-                    Image("chat_unfill_icn")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                        .frame(height: 35)
-                }
-                .frame(width: geometry.size.width * 0.5)
-                
-//                Spacer()
-                Button {
-                    
-                } label: {
-                    Image("setting_unfill_icn")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                        .frame(height: 35)
-                }
-                .frame(width: geometry.size.width * 0.5)
+    var customTabBar: some View {
+        HStack(spacing: 0) {
+            Button {
+                isChatSelected = true
+            } label: {
+                Image(isChatSelected ? "chat_fill_icn" : "chat_unfill_icn")
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fit)
+                    .frame(height: 35)
+    
+            }
+            .frame(maxWidth: .infinity)
+
+            Button {
+                isChatSelected = false
+            } label: {
+                Image(isChatSelected ? "setting_unfill_icn" : "setting_fill_icn" )
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fit)
+                    .frame(height: 35)
                 
             }
-            .frame(height: 50)
-            .background(Color.white.opacity(0.4))
-            .cornerRadius(geometry.size.height/2)
-            
+            .frame(maxWidth: .infinity)
         }
-        
+        .frame(height: 60)
+        .background(Color.white.opacity(0.4))
+        .cornerRadius(30)
+        .padding(.horizontal)
+        .padding(.bottom) // padding for safe area
     }
-    
+
 }
 
 #Preview {
