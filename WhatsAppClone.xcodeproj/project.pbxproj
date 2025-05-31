@@ -25,6 +25,8 @@
 		186FEC402DE20EF5008647FD /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */; };
 		186FEC422DE2233A008647FD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186FEC412DE2233A008647FD /* HomeViewModel.swift */; };
 		187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BFCF52DDD06DA0029ED9B /* AppExtension.swift */; };
+		187CE0772DEA3FFE0056448C /* ExploreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CE0762DEA3FFE0056448C /* ExploreListView.swift */; };
+		187FC73B2DEAF5AB008EBA0A /* EmailSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187FC73A2DEAF5AB008EBA0A /* EmailSignInView.swift */; };
 		18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */; };
 		18809C662DDDCD650050DD23 /* UserAvatarsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */; };
 		18809C9C2DDE3D720050DD23 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C9B2DDE3D720050DD23 /* UserModel.swift */; };
@@ -52,6 +54,8 @@
 		186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		186FEC412DE2233A008647FD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		187BFCF52DDD06DA0029ED9B /* AppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
+		187CE0762DEA3FFE0056448C /* ExploreListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreListView.swift; sourceTree = "<group>"; };
+		187FC73A2DEAF5AB008EBA0A /* EmailSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignInView.swift; sourceTree = "<group>"; };
 		18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSheetView.swift; sourceTree = "<group>"; };
 		18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarsModels.swift; sourceTree = "<group>"; };
 		18809C9B2DDE3D720050DD23 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -140,9 +144,10 @@
 		182FB4952DD510B40056F573 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				18B6CB462DDBA64F00410B46 /* ProfileDetails */,
-				18B6CB452DDBA40400410B46 /* Otp */,
 				18B6CB442DDBA3EF00410B46 /* Login */,
+				18B6CB452DDBA40400410B46 /* Otp */,
+				187FC7392DEAF573008EBA0A /* EmailSignIn */,
+				18B6CB462DDBA64F00410B46 /* ProfileDetails */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -175,6 +180,8 @@
 		186FEC3D2DE20C2F008647FD /* view */ = {
 			isa = PBXGroup;
 			children = (
+				187CE0752DEA3FC00056448C /* FriendsList */,
+				187CE0742DEA3FAB0056448C /* ExploreList */,
 				186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */,
 			);
 			path = view;
@@ -186,6 +193,28 @@
 				186FEC412DE2233A008647FD /* HomeViewModel.swift */,
 			);
 			path = viewModel;
+			sourceTree = "<group>";
+		};
+		187CE0742DEA3FAB0056448C /* ExploreList */ = {
+			isa = PBXGroup;
+			children = (
+				187CE0762DEA3FFE0056448C /* ExploreListView.swift */,
+			);
+			path = ExploreList;
+			sourceTree = "<group>";
+		};
+		187CE0752DEA3FC00056448C /* FriendsList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FriendsList;
+			sourceTree = "<group>";
+		};
+		187FC7392DEAF573008EBA0A /* EmailSignIn */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = EmailSignIn;
 			sourceTree = "<group>";
 		};
 		18B6CB392DDB92D500410B46 /* Screens */ = {
@@ -231,6 +260,7 @@
 			children = (
 				18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */,
 				18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */,
+				187FC73A2DEAF5AB008EBA0A /* EmailSignInView.swift */,
 			);
 			path = ProfileDetails;
 			sourceTree = "<group>";
@@ -322,6 +352,7 @@
 				182FB4982DD510D40056F573 /* CountryListModel.swift in Sources */,
 				186FEC422DE2233A008647FD /* HomeViewModel.swift in Sources */,
 				18B6CB3C2DDB930100410B46 /* AppConstant.swift in Sources */,
+				187FC73B2DEAF5AB008EBA0A /* EmailSignInView.swift in Sources */,
 				18410F792DD9DCA500A3820D /* OtpVerifyView.swift in Sources */,
 				18B6CB3E2DDB973200410B46 /* AppFunctions.swift in Sources */,
 				182FB49A2DD511D10056F573 /* CountriesListView.swift in Sources */,
@@ -331,6 +362,7 @@
 				182FB48E2DD510810056F573 /* ContentView.swift in Sources */,
 				18410F7B2DD9DCB800A3820D /* OTPFieldView.swift in Sources */,
 				1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */,
+				187CE0772DEA3FFE0056448C /* ExploreListView.swift in Sources */,
 				18809C9C2DDE3D720050DD23 /* UserModel.swift in Sources */,
 				18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */,
 				182FB48F2DD510810056F573 /* LoginView.swift in Sources */,
@@ -489,7 +521,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.picturereverse.search;
+				PRODUCT_BUNDLE_IDENTIFIER = manthan.WhatsAppClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SpaceGabWildCard;
@@ -524,7 +556,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.picturereverse.search;
+				PRODUCT_BUNDLE_IDENTIFIER = manthan.WhatsAppClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SpaceGabWildCard;

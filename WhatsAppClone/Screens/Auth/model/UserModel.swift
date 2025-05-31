@@ -12,4 +12,5 @@ struct User : Codable, Equatable {
     let userPhone : String
     let userBio : String
     let userAvatar : String
+    let userEmail : String
 }

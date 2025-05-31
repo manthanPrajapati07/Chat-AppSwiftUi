@@ -19,9 +19,7 @@ struct AddProfileDetailsView: View {
         !userName.isEmptyOrWhitespace()
     }
     
-   // @State private var navigateToHome : Bool = false
-        
-    
+  
     var body: some View {
         NavigationView{
                 VStack{
@@ -29,7 +27,12 @@ struct AddProfileDetailsView: View {
                     ScrollView{
                         VStack{
                             profileInfoView
-                            phoneNumberView
+                            if !authVM.userPhone.isEmptyOrWhitespace(){
+                                
+                                phoneNumberView
+                            }else{
+                                emailAddressView
+                            }
                             BioView
                         }
                         Spacer()
@@ -39,23 +42,9 @@ struct AddProfileDetailsView: View {
                             .presentationDetents([.medium])
                             .presentationDragIndicator(.visible)
                     }
-                    
-//                    NavigationLink(
-//                        destination: HomeScreenView(),
-//                        isActive: $navigateToHome
-//                    ) {
-//                        EmptyView()
-//                    }
-//                    .environmentObject(authVM)
-                    
 
                 }
                 .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
-//                .onChange(of: authVM.currentUser!) { oldValue, newValue in
-//                    if newValue.userName != oldValue.userName{
-//                        navigateToHome = true
-//                    }
-//                }
         
         }
         .navigationBarBackButtonHidden()
@@ -147,6 +136,31 @@ struct AddProfileDetailsView: View {
             
             HStack{
                 Text(authVM.currentUser?.userPhone ?? "")
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundStyle(Color.black)
+                    .padding(.horizontal)
+                
+                Spacer()
+            }
+            .frame(height: 50)
+            .background(Color.white.opacity(0.5))
+            .cornerRadius(10.0)
+        }
+        .padding(.vertical)
+    }
+    
+    var emailAddressView : some View{
+        VStack{
+            HStack{
+                Text("EMAIL ADDRESS")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(Color.gray)
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            HStack{
+                Text(authVM.currentUser?.userEmail ?? "")
                     .font(.system(size: 20, weight: .medium))
                     .foregroundStyle(Color.black)
                     .padding(.horizontal)

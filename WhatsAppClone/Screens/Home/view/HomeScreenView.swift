@@ -12,7 +12,7 @@ struct HomeScreenView: View {
     @State var homeVM = HomeViewModel.shared
     @State var selectedValue : String = "Explore"
     
-    @StateObject var authVM = AuthViewModel.shared
+    @EnvironmentObject var authVM : AuthViewModel
     
     @State var isChatSelected : Bool = true
 
@@ -22,7 +22,7 @@ struct HomeScreenView: View {
             VStack{
                 customNavBarView
                 
-                Text(authVM.currentUser?.userName ?? "hello")
+                Text(authVM.currentUser?.userName ?? authVM.currentUser?.userEmail ?? "hello")
                 Button {
                     authVM.signOut()
                 } label: {

@@ -14,6 +14,10 @@ extension String {
     func isEmptyOrWhitespace() -> Bool {
         return self.trimmingCharacters(in: .whitespaces).isEmpty
     }
+    
+    func isValidGmail() -> Bool {
+        return !self.isEmptyOrWhitespace() && self.lowercased().hasSuffix("@gmail.com")
+    }
 }
 
 extension Color {

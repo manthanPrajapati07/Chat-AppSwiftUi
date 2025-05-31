@@ -14,8 +14,9 @@ struct LoginView: View {
     @State private var previousCountry: Country? = Country(name: "India", code: "+91", validNumberCount: 10)
     @State private var FullPhoneNumber = ""
     @State private var userModel : User!
+    @State private var isNavigateToEmail : Bool = false
     
-    
+   // @StateObject var authVM = AuthViewModel.shared
     @EnvironmentObject var authVM : AuthViewModel
         
     var isValidNumber: Bool {
@@ -38,6 +39,9 @@ struct LoginView: View {
                     numberAndTxtFeild
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
+                    emailSignIn
+                        .padding(.top, 100)
+                    
                     Spacer()
                 }
                 
@@ -47,7 +51,15 @@ struct LoginView: View {
                 ) {
                     EmptyView()
                 }
-                .padding()
+                
+                NavigationLink(
+                    destination: EmailSignInView(),
+                    isActive: $isNavigateToEmail
+                ) {
+                    EmptyView()
+                }
+                .environmentObject(authVM)
+            
             }
         }
         .onChange(of: SelectedCountry) { newValue in
@@ -119,6 +131,37 @@ struct LoginView: View {
             .frame(maxHeight: 60)
             Divider()
         }
+    }
+    
+   
+    var emailSignIn: some View {
+        
+        Button {
+            isNavigateToEmail = true
+        } label: {
+            HStack(alignment: .center) {
+                // Left line
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(height: 0.5)
+                    .frame(maxWidth: .infinity)
+
+                // Centered text
+                Text("Sign Up Using Email")
+                    .font(.subheadline)
+                    .foregroundColor(Color.blue)
+                    .padding(.horizontal, 8)
+                    .layoutPriority(1)
+
+                // Right line
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(height: 0.5)
+                    .frame(maxWidth: .infinity)
+            }
+            .padding(.horizontal)
+        }
+
     }
     
     

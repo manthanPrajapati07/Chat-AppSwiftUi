@@ -31,6 +31,7 @@ final class AuthViewModel: ObservableObject{
     var verificationID: String?
     var userUid : String = ""
     var userPhone : String = ""
+    var userEmail : String = ""
     
     @Published var currentUser : User?
     @Published var firebaseUser : FirebaseAuth.User?
@@ -42,26 +43,23 @@ final class AuthViewModel: ObservableObject{
     
     func loadCurrentUser() async{
         if let user = auth.currentUser{
-                await fatchUserDetail(with: user.uid){ userData in
-                    switch userData {
-                    case .success(let userDetails):
-                        self.currentUser = userDetails
-                        fatchAvatarsDetails(with: self.currentUser!.userAvatar) { avatar in
-                            switch avatar{
-                            case .success(let userAvatar):
-                                self.userAvatar = userAvatar
-                                self.firebaseUser = user
-                            case .failure(_):
-                                firebaseUser = nil
-                                userAvatar = nil
-                            }
+            await fatchUserDetail(with: user.uid){ userData in
+                switch userData {
+                case .success(let userDetails):
+                    self.currentUser = userDetails
+                    fatchAvatarsDetails(with: self.currentUser!.userAvatar) { avatar in
+                        switch avatar{
+                        case .success(let userAvatar):
+                            self.userAvatar = userAvatar
+                            self.firebaseUser = user
+                        case .failure(_):
+                            signOut()
                         }
-                    case .failure(_):
-                        firebaseUser = nil
-                        userAvatar = nil
-                        self.currentUser = nil
                     }
+                case .failure(_):
+                    signOut()
                 }
+            }
         }
     }
     
@@ -108,7 +106,7 @@ final class AuthViewModel: ObservableObject{
                 return
             }
             
-          
+            
             let uid = authResult.user.uid
             print(uid)
             
@@ -130,7 +128,7 @@ final class AuthViewModel: ObservableObject{
                         
                     case .failure(_):
                         Task{
-                            await self.userEntryInFireStore(userUid: uid, userName: "", UserBio: ""){ added in
+                            await self.userEntryInFireStore(userUid: uid, userName: "", UserBio: "", userEmail: "", phoneNumber: self.userPhone){ added in
                                 if added{
                                     Task{
                                         await self.fatchUserDetail(with: uid) { users in
@@ -147,7 +145,7 @@ final class AuthViewModel: ObservableObject{
                                                         self.firebaseUser = nil
                                                     }
                                                 }
-                                            
+                                                
                                             case .failure(let error):
                                                 print(error)
                                                 self.firebaseUser = nil
@@ -178,8 +176,6 @@ final class AuthViewModel: ObservableObject{
     func fatchAvatarsDetails(with avatarName:String, completion: (Result<UserAvatarsList, Error>) -> ()){
         if let avatar = UserAvatarsList.arrayAvatars.first(where: {$0.avatarName == avatarName}){
             completion(.success(avatar))
-//            userAvatar = avatar
-           // self.firebaseUser = user
         }else{
             completion(.failure(AuthError.unknown))
             userAvatar = nil
@@ -187,9 +183,9 @@ final class AuthViewModel: ObservableObject{
         }
     }
     
-    func userEntryInFireStore(userUid : String ,userName : String, UserBio : String, completion : (Bool) -> ()) async {
+    func userEntryInFireStore(userUid : String ,userName : String, UserBio : String, userEmail: String, phoneNumber: String, completion : (Bool) -> ()) async {
         AppFunctions.showLoader()
-        let user = User(userName: userName, userPhone: userPhone, userBio: UserBio, userAvatar: userAvatar?.avatarName ?? "userAvatar1")
+        let user = User(userName: userName, userPhone: phoneNumber, userBio: UserBio, userAvatar: userAvatar?.avatarName ?? "userAvatar1", userEmail: userEmail)
         print(user)
         AppFunctions.hideLoader()
         do {
@@ -202,13 +198,13 @@ final class AuthViewModel: ObservableObject{
     
     func updateEntryInFireStore(userName : String, UserBio : String) async {
         AppFunctions.showLoader()
-        let user = User(userName: userName, userPhone: userPhone, userBio: UserBio, userAvatar: userAvatar?.avatarName ?? "userAvatar1")
+        //        let user = User(userName: userName, userPhone: userPhone, userBio: UserBio, userAvatar: userAvatar?.avatarName ?? "userAvatar1", userEmail: self.userEmail)
         
         let updatedData: [String: Any] = [
-                "userName": userName,
-                "userBio": UserBio,
-                "userAvatar": userAvatar?.avatarName ?? ""
-            ]
+            "userName": userName,
+            "userBio": UserBio,
+            "userAvatar": userAvatar?.avatarName ?? ""
+        ]
         do {
             try await db.collection("User").document(firebaseUser!.uid).updateData(updatedData)
             AppFunctions.hideLoader()
@@ -232,7 +228,7 @@ final class AuthViewModel: ObservableObject{
                     firebaseUser = nil
                 }
             }
-        
+            
         } catch {
             firebaseUser = nil
             currentUser = nil
@@ -240,14 +236,132 @@ final class AuthViewModel: ObservableObject{
         }
     }
     
+    func emailSignUp(email: String, password: String) async{
+        AppFunctions.showLoader()
+        Task{
+            await emailSignIn(email: email, password: password) { signIn in
+                switch signIn{
+                case .success(let authUser):
+                    
+                    Task{
+                        await self.fatchUserDetail(with: authUser.user.uid) { userDetail in
+                            switch userDetail{
+                            case .success(let user):
+                                self.currentUser = user
+                                Task{
+                                    fatchAvatarsDetails(with: user.userAvatar) { userAvatar in
+                                        AppFunctions.hideLoader()
+                                        switch userAvatar{
+                                            
+                                        case .success(let avatar):
+                                            self.userAvatar = avatar
+                                            self.firebaseUser = authUser.user
+                                            
+                                        case .failure(let error):
+                                            print(error)
+                                            signOut()
+                                        }
+                                    }
+                                }
+                            case .failure(let error):
+                                AppFunctions.hideLoader()
+                                print(error)
+                                signOut()
+                            }
+                        }
+                    }
+                    
+                    
+                case .failure(let error):
+                    print(error)
+                    Task{
+                        AppFunctions.hideLoader()
+                        await createUser(email: email, password: password)
+                    }
+                }
+            }
+        }
+    }
+    
+   private func createUser(email: String, password: String) async{
+        do{
+            AppFunctions.showLoader()
+            let authResult = try await auth.createUser(withEmail: email, password: password)
+            
+            await userEntryInFireStore(userUid: authResult.user.uid, userName: "", UserBio: "", userEmail: email, phoneNumber: "") { added in
+                
+                if added{
+                    Task{
+                        AppFunctions.hideLoader()
+                        await emailSignIn(email: email, password: password) { loginAuthResult in
+                            switch loginAuthResult{
+                            case .success(let authUser):
+                                Task{
+                                    await self.fatchUserDetail(with: authUser.user.uid) { userDetail in
+                                        switch userDetail{
+                                        case .success(let user):
+                                            self.currentUser = user
+                                            Task{
+                                                fatchAvatarsDetails(with: user.userAvatar) { userAvatar in
+                                                    switch userAvatar{
+                                                        
+                                                    case .success(let avatar):
+                                                        
+                                                        self.userAvatar = avatar
+                                                        self.firebaseUser = authUser.user
+                                                        AppFunctions.hideLoader()
+                                                        
+                                                    case .failure(let error):
+                                                        print(error)
+                                                        signOut()
+                                                    }
+                                                }
+                                            }
+                                        case .failure(let error):
+                                            print(error)
+                                            signOut()
+                                        }
+                                    }
+                                }
+                            case .failure(let error):
+                                print(error)
+                                signOut()
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+        catch{
+            print(error.localizedDescription)
+            AppFunctions.hideLoader()
+            signOut()
+        }
+    }
+    
+    
+    private func emailSignIn(email: String, password: String, completion: (Result<AuthDataResult,Error>) ->()) async{
+        do{
+            let authResult = try await auth.signIn(withEmail: email, password: password)
+            completion(.success(authResult))
+        }
+        catch{
+            print(error.localizedDescription)
+            completion(.failure(AuthError.somethingWrong))
+        }
+    }
+    
     func signOut() {
         do {
             firebaseUser = nil
             currentUser = nil
+            userAvatar = nil
             isNumberVerified = false
             try auth.signOut()
+            
         }catch {
-           
+            
         }
     }
     
