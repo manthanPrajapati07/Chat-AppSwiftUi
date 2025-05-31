@@ -9,10 +9,11 @@ import SwiftUI
 
 struct HomeScreenView: View {
     
-    @State var homeVM = HomeViewModel.shared
     @State var selectedValue : String = "Explore"
     
+    @StateObject var homeVM = HomeViewModel.shared
     @EnvironmentObject var authVM : AuthViewModel
+//    @StateObject var authVM = AuthViewModel.shared
     
     @State var isChatSelected : Bool = true
 
@@ -21,26 +22,36 @@ struct HomeScreenView: View {
         NavigationStack{
             VStack{
                 customNavBarView
-                
-                Text(authVM.currentUser?.userName ?? authVM.currentUser?.userEmail ?? "hello")
-                Button {
-                    authVM.signOut()
-                } label: {
-                    Text("Sign Out")
+                ZStack{
+                    if selectedValue == homeVM.segmentArrey.first {
+                        ExploreListView()
+                            .environmentObject(homeVM)
+                            .padding(.top, 50)
+                    }else{
+                        
+                    }
+                    VStack{
+                        customSegment(with: homeVM.segmentArrey, selected: selectedValue)
+                            .padding(.horizontal, 10)
+                        
+                        Spacer()
+                        
+                        customTabBar
+                            .padding()
+                    }
                 }
-
-                customSegment(with: homeVM.segmentArrey, selected: selectedValue)
-                    .padding(.horizontal, 10)
                 
-                Spacer()
-                
-                customTabBar
-                    .padding()
-                   
             }
             .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
+            .onAppear(){
+               
+                homeVM.fetchFetchExploreUsersList()
+                
+            }
         }
     }
+    
+
     
     var customNavBarView: some View{
         ZStack{
