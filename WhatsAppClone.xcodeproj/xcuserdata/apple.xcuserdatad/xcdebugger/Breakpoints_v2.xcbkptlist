@@ -146,36 +146,6 @@
             endingLineNumber = "245"
             landmarkName = "emailSignUp(email:password:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C3616579-0FE3-4D8C-9BC5-FB0DD59468F5 - 95f2fb1ee9e345bd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;FirebaseAuth.AuthDataResult, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in WhatsAppClone.AuthViewModel.emailSignUp(email: Swift.String, password: Swift.String) async -&gt; ()"
-                  moduleName = "WhatsAppClone.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/GitHub/WhatsAppCloneSwiftUI/WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "246"
-                  endingLineNumber = "246">
-               </Location>
-               <Location
-                  uuid = "C3616579-0FE3-4D8C-9BC5-FB0DD59468F5 - dff9af5607b45e08"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;FirebaseAuth.AuthDataResult, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in WhatsAppClone.AuthViewModel.emailSignUp(email: Swift.String, password: Swift.String) async -&gt; ()"
-                  moduleName = "WhatsAppClone.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/GitHub/WhatsAppCloneSwiftUI/WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "246"
-                  endingLineNumber = "246">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -240,36 +210,6 @@
             endingLineNumber = "305"
             landmarkName = "createUser(email:password:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DACD3E03-45E2-45A6-BF87-4D11774814F3 - ee35abd237f65068"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;WhatsAppClone.User, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;FirebaseAuth.AuthDataResult, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Bool) -&gt; () in WhatsAppClone.AuthViewModel.createUser(email: Swift.String, password: Swift.String) async -&gt; ()"
-                  moduleName = "WhatsAppClone.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/GitHub/WhatsAppCloneSwiftUI/WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "305"
-                  endingLineNumber = "305">
-               </Location>
-               <Location
-                  uuid = "DACD3E03-45E2-45A6-BF87-4D11774814F3 - 1e5dc342e7b36dbf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;WhatsAppClone.UserAvatarsList, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;WhatsAppClone.User, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;FirebaseAuth.AuthDataResult, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Bool) -&gt; () in WhatsAppClone.AuthViewModel.createUser(email: Swift.String, password: Swift.String) async -&gt; ()"
-                  moduleName = "WhatsAppClone.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/GitHub/WhatsAppCloneSwiftUI/WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "306"
-                  endingLineNumber = "306">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

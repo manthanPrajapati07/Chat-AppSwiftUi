@@ -355,8 +355,11 @@ final class AuthViewModel: ObservableObject{
     func signOut() {
         do {
             firebaseUser = nil
-            currentUser = nil
-            userAvatar = nil
+            AppFunctions.delay(1.0) { [weak self] in
+                guard let self else{return}
+                self.currentUser = nil
+                self.userAvatar = nil
+            }
             isNumberVerified = false
             try auth.signOut()
             
