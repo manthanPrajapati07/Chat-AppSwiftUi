@@ -27,6 +27,7 @@
 		187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BFCF52DDD06DA0029ED9B /* AppExtension.swift */; };
 		187CE0772DEA3FFE0056448C /* ExploreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CE0762DEA3FFE0056448C /* ExploreListView.swift */; };
 		187FC73B2DEAF5AB008EBA0A /* EmailSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187FC73A2DEAF5AB008EBA0A /* EmailSignInView.swift */; };
+		187FC7992DEB1C82008EBA0A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 187FC7982DEB1C82008EBA0A /* GoogleService-Info.plist */; };
 		18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */; };
 		18809C662DDDCD650050DD23 /* UserAvatarsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */; };
 		18809C9C2DDE3D720050DD23 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C9B2DDE3D720050DD23 /* UserModel.swift */; };
@@ -35,7 +36,6 @@
 		18B6CB412DDB9EDB00410B46 /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6CB402DDB9EDB00410B46 /* NVActivityIndicatorView */; };
 		18B6CB432DDB9EDB00410B46 /* NVActivityIndicatorViewExtended in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6CB422DDB9EDB00410B46 /* NVActivityIndicatorViewExtended */; };
 		18B6CB482DDBA67700410B46 /* AddProfileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */; };
-		82FE20EF2DDAFB790075DD5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82FE20EE2DDAFB790075DD5B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,13 +56,13 @@
 		187BFCF52DDD06DA0029ED9B /* AppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
 		187CE0762DEA3FFE0056448C /* ExploreListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreListView.swift; sourceTree = "<group>"; };
 		187FC73A2DEAF5AB008EBA0A /* EmailSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignInView.swift; sourceTree = "<group>"; };
+		187FC7982DEB1C82008EBA0A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSheetView.swift; sourceTree = "<group>"; };
 		18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarsModels.swift; sourceTree = "<group>"; };
 		18809C9B2DDE3D720050DD23 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		18B6CB3B2DDB92F300410B46 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		18B6CB3D2DDB972B00410B46 /* AppFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFunctions.swift; sourceTree = "<group>"; };
 		18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileDetailsView.swift; sourceTree = "<group>"; };
-		82FE20EE2DDAFB790075DD5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +105,8 @@
 				18B6CB3A2DDB92E000410B46 /* Constant */,
 				18B6CB392DDB92D500410B46 /* Screens */,
 				182FB4872DD510810056F573 /* Assets.xcassets */,
+				187FC7982DEB1C82008EBA0A /* GoogleService-Info.plist */,
 				1846C8812DD9158200AEE854 /* Info.plist */,
-				82FE20EE2DDAFB790075DD5B /* GoogleService-Info.plist */,
 				182FB4882DD510810056F573 /* ContentView.swift */,
 				182FB48B2DD510810056F573 /* WhatsAppCloneApp.swift */,
 			);
@@ -338,7 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				182FB48D2DD510810056F573 /* Assets.xcassets in Resources */,
-				82FE20EF2DDAFB790075DD5B /* GoogleService-Info.plist in Resources */,
+				187FC7992DEB1C82008EBA0A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,11 +502,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 539289LEEH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhatsAppClone/Info.plist;
@@ -524,7 +522,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = manthan.WhatsAppClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SpaceGabWildCard;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -537,11 +534,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 539289LEEH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhatsAppClone/Info.plist;
@@ -559,7 +554,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = manthan.WhatsAppClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SpaceGabWildCard;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

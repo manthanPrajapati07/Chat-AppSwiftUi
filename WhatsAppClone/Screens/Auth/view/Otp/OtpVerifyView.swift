@@ -92,6 +92,12 @@ struct OtpVerifyView: View {
                     }
                     .frame(maxWidth: geometry.size.width * 0.8)
                     
+                    if phoneNumber == "+911234567890"{
+                        Text("enter OTP 123456")
+                            .font(.system(size: 16, weight: .medium))
+                            .padding(.top, 50)
+                    }
+                
                     
                     Spacer()
                 }

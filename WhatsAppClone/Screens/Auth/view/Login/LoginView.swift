@@ -39,6 +39,13 @@ struct LoginView: View {
                     numberAndTxtFeild
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
+                    Text("use static number +911234567890 if authentication fail")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(Color.gray)
+                        .padding(.top, 100)
+                        .padding(.horizontal)
+                    
+                    
                     emailSignIn
                         .padding(.top, 100)
                     

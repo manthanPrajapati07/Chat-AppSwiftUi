@@ -15,7 +15,7 @@ struct EmailSignInView: View {
     @EnvironmentObject var authVM : AuthViewModel
     
     var isValid : Bool{
-        email.isValidGmail() && !password.isEmptyOrWhitespace() && password.count > 6
+        email.isValidGmail() && !password.isEmptyOrWhitespace() && password.count >= 6
     }
     
     var body: some View {
@@ -28,6 +28,11 @@ struct EmailSignInView: View {
                 
                 txtPasswordView
                     .padding(.top, 20)
+                
+                Text("password must be 6 digits long")
+                    .font(.system(size: 14, weight: .regular))
+                    .padding(.top, 50)
+                    .foregroundStyle(.gray)
                 
                 Spacer()
             }

@@ -82,6 +82,7 @@ final class AuthViewModel: ObservableObject{
             self.verificationID = verificationID
             self.userPhone = phoneNumber
             self.isNumberVerified = true
+           
         }
     }
     
