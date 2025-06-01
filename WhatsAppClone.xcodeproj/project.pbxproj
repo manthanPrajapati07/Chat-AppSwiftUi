@@ -31,6 +31,7 @@
 		18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */; };
 		18809C662DDDCD650050DD23 /* UserAvatarsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */; };
 		18809C9C2DDE3D720050DD23 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18809C9B2DDE3D720050DD23 /* UserModel.swift */; };
+		1881FEAC2DEC7C9800B6BBA4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881FEAB2DEC7C9800B6BBA4 /* SettingView.swift */; };
 		18B6CB3C2DDB930100410B46 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6CB3B2DDB92F300410B46 /* AppConstant.swift */; };
 		18B6CB3E2DDB973200410B46 /* AppFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6CB3D2DDB972B00410B46 /* AppFunctions.swift */; };
 		18B6CB412DDB9EDB00410B46 /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6CB402DDB9EDB00410B46 /* NVActivityIndicatorView */; };
@@ -60,6 +61,7 @@
 		18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSheetView.swift; sourceTree = "<group>"; };
 		18809C652DDDCD5A0050DD23 /* UserAvatarsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarsModels.swift; sourceTree = "<group>"; };
 		18809C9B2DDE3D720050DD23 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		1881FEAB2DEC7C9800B6BBA4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		18B6CB3B2DDB92F300410B46 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		18B6CB3D2DDB972B00410B46 /* AppFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFunctions.swift; sourceTree = "<group>"; };
 		18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileDetailsView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		186FEC3D2DE20C2F008647FD /* view */ = {
 			isa = PBXGroup;
 			children = (
+				1881FEA92DEC7C6C00B6BBA4 /* Setting */,
 				187CE0752DEA3FC00056448C /* FriendsList */,
 				187CE0742DEA3FAB0056448C /* ExploreList */,
 				186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */,
@@ -215,6 +218,14 @@
 			children = (
 			);
 			path = EmailSignIn;
+			sourceTree = "<group>";
+		};
+		1881FEA92DEC7C6C00B6BBA4 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				1881FEAB2DEC7C9800B6BBA4 /* SettingView.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		18B6CB392DDB92D500410B46 /* Screens */ = {
@@ -352,6 +363,7 @@
 				182FB4982DD510D40056F573 /* CountryListModel.swift in Sources */,
 				186FEC422DE2233A008647FD /* HomeViewModel.swift in Sources */,
 				18B6CB3C2DDB930100410B46 /* AppConstant.swift in Sources */,
+				1881FEAC2DEC7C9800B6BBA4 /* SettingView.swift in Sources */,
 				187FC73B2DEAF5AB008EBA0A /* EmailSignInView.swift in Sources */,
 				18410F792DD9DCA500A3820D /* OtpVerifyView.swift in Sources */,
 				18B6CB3E2DDB973200410B46 /* AppFunctions.swift in Sources */,
