@@ -7,6 +7,7 @@
 import UIKit
 import NVActivityIndicatorView
 import SwiftUICore
+import FirebaseAuth
 
 final class AppFunctions{
     
@@ -65,6 +66,13 @@ final class AppFunctions{
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
+    }
+    
+    static func getCurrentUserId() -> String{
+        if let user = Auth.auth().currentUser{
+            return user.uid
+        }
+        return ""
     }
 }
 
