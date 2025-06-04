@@ -26,6 +26,7 @@ struct ExploreListView: View {
                 }
             }
             .padding(.top, 20)
+            .padding(.bottom, 100)
           
         }
     }
@@ -53,10 +54,6 @@ struct ExploreListView: View {
                     Spacer()
                 }
                
-//                Spacer()
-//                Rectangle()
-//                    .frame(height: 0.3)
-//                    .background(Color.gray.opacity(0.3))
             }
             .padding(.horizontal, 5)
             

@@ -13,11 +13,9 @@ struct HomeScreenView: View {
     
     @StateObject var homeVM = HomeViewModel.shared
     @EnvironmentObject var authVM : AuthViewModel
-//    @StateObject var authVM = AuthViewModel.shared
-    
+
     @State var isChatSelected : Bool = true
 
-    
     var body: some View {
         NavigationStack{
             VStack{
@@ -44,7 +42,6 @@ struct HomeScreenView: View {
             }
             .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
             .onAppear(){
-               
                 homeVM.fetchFetchExploreUsersList()
                 
             }

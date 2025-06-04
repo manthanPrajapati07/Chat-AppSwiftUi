@@ -22,6 +22,7 @@
 		1846C8782DD9126900AEE854 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8772DD9126900AEE854 /* FirebaseFirestore */; };
 		1846C87A2DD9126900AEE854 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8792DD9126900AEE854 /* FirebaseStorage */; };
 		1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1846C8822DD9168400AEE854 /* AuthViewModel.swift */; };
+		184C53A32DF0B8A2002A7536 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C53A22DF0B8A2002A7536 /* Model.swift */; };
 		186FEC402DE20EF5008647FD /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */; };
 		186FEC422DE2233A008647FD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186FEC412DE2233A008647FD /* HomeViewModel.swift */; };
 		187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BFCF52DDD06DA0029ED9B /* AppExtension.swift */; };
@@ -52,6 +53,7 @@
 		18410F7A2DD9DCB800A3820D /* OTPFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
 		1846C8812DD9158200AEE854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1846C8822DD9168400AEE854 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		184C53A22DF0B8A2002A7536 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		186FEC412DE2233A008647FD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		187BFCF52DDD06DA0029ED9B /* AppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		186FEC3C2DE20C1E008647FD /* model */ = {
 			isa = PBXGroup;
 			children = (
+				184C53A22DF0B8A2002A7536 /* Model.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */,
 				182FB48F2DD510810056F573 /* LoginView.swift in Sources */,
 				187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */,
+				184C53A32DF0B8A2002A7536 /* Model.swift in Sources */,
 				182FB4902DD510810056F573 /* SplashView.swift in Sources */,
 				182FB4912DD510810056F573 /* WhatsAppCloneApp.swift in Sources */,
 			);
