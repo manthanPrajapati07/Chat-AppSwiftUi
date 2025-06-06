@@ -10,23 +10,31 @@ import SwiftUI
 struct HomeScreenView: View {
     
     @State var selectedValue : String = "Explore"
-    
     @StateObject var homeVM = HomeViewModel.shared
     @EnvironmentObject var authVM : AuthViewModel
 
     @State var isChatSelected : Bool = true
+    
 
     var body: some View {
         NavigationStack{
             VStack{
                 customNavBarView
                 ZStack{
-                    if selectedValue == homeVM.segmentArrey.first {
-                        ExploreListView()
-                            .environmentObject(homeVM)
-                            .padding(.top, 50)
+                    if isChatSelected{
+                        if selectedValue == homeVM.segmentArrey.first {
+                            ExploreListView()
+                                .environmentObject(homeVM)
+                                .padding(.top, 50)
+                        }else{
+                            FriendListView()
+                                .environmentObject(homeVM)
+                                .padding(.top, 50)
+                        }
                     }else{
-                        
+                        SettingView()
+                            .environmentObject(authVM)
+                            .padding(.top, 50)
                     }
                     VStack{
                         customSegment(with: homeVM.segmentArrey, selected: selectedValue)
@@ -42,8 +50,7 @@ struct HomeScreenView: View {
             }
             .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
             .onAppear(){
-                homeVM.fetchFetchExploreUsersList()
-                
+                homeVM.fetchUsers()
             }
         }
     }

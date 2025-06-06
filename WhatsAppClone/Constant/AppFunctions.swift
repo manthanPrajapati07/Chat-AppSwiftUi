@@ -57,7 +57,58 @@ final class AppFunctions{
         }
     }
     
-    static func avatarGradient(from avatar: UserAvatarsList) -> LinearGradient {
+    class func ShowToast(massage: String, duration: TimeInterval) {
+        DispatchQueue.main.async {
+            if let window = UIApplication.shared.connectedScenes
+                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
+                
+                let view = UIView()
+                view.backgroundColor = .black.withAlphaComponent(0.7)
+                view.layer.cornerRadius = 10
+                view.clipsToBounds = true
+                view.alpha = 0
+
+                let width: CGFloat = UIScreen.main.bounds.width - 50
+                let height: CGFloat = 30
+                let x = (UIScreen.main.bounds.width - width) / 2
+                let y = UIScreen.main.bounds.height - 200
+                view.frame = CGRect(x: x, y: y, width: width, height: height)
+                
+                let label = UILabel()
+                label.textColor = .white
+                label.font = .systemFont(ofSize: 15, weight: .medium)
+                label.textAlignment = .center
+                label.text = massage
+                label.numberOfLines = 0
+                label.translatesAutoresizingMaskIntoConstraints = false
+
+                view.addSubview(label)
+                NSLayoutConstraint.activate([
+                    label.topAnchor.constraint(equalTo: view.topAnchor),
+                    label.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                    label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+                    label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+                ])
+                
+                window.addSubview(view)
+                
+                UIView.animate(withDuration: 0.3) {
+                    view.alpha = 1.0
+                }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        view.alpha = 0.0
+                    }) { _ in
+                        view.removeFromSuperview()
+                    }
+                }
+            }
+        }
+    }
+
+    
+    class func avatarGradient(from avatar: UserAvatarsList) -> LinearGradient {
         return LinearGradient(
             gradient: Gradient(colors: [
                 Color(hex: avatar.avatarColor1),
@@ -68,11 +119,20 @@ final class AppFunctions{
         )
     }
     
-    static func getCurrentUserId() -> String{
+    class func getCurrentUserId() -> String{
         if let user = Auth.auth().currentUser{
             return user.uid
         }
         return ""
+    }
+    
+    class func getCurrentTimestamp() -> Int {
+        return Int(Date().timeIntervalSince1970 * 1000)
+    }
+    
+    @MainActor
+    class func getCurrentUserDetail() -> User? {
+        return AuthViewModel.shared.currentUser
     }
 }
 

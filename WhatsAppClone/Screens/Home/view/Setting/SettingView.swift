@@ -8,9 +8,17 @@
 import SwiftUI
 
 struct SettingView: View {
+    @EnvironmentObject var authVM : AuthViewModel
     var body: some View {
         VStack{
             customNavView
+            
+            Button {
+                authVM.signOut()
+            } label: {
+                Text("SignOut")
+            }
+
             Spacer()
         }
     }

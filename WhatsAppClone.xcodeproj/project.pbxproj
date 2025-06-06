@@ -23,6 +23,7 @@
 		1846C87A2DD9126900AEE854 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1846C8792DD9126900AEE854 /* FirebaseStorage */; };
 		1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1846C8822DD9168400AEE854 /* AuthViewModel.swift */; };
 		184C53A32DF0B8A2002A7536 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C53A22DF0B8A2002A7536 /* Model.swift */; };
+		185319752DF311E000AB7BB9 /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185319742DF311E000AB7BB9 /* FriendListView.swift */; };
 		186FEC402DE20EF5008647FD /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */; };
 		186FEC422DE2233A008647FD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186FEC412DE2233A008647FD /* HomeViewModel.swift */; };
 		187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BFCF52DDD06DA0029ED9B /* AppExtension.swift */; };
@@ -54,6 +55,7 @@
 		1846C8812DD9158200AEE854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1846C8822DD9168400AEE854 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		184C53A22DF0B8A2002A7536 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		185319742DF311E000AB7BB9 /* FriendListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListView.swift; sourceTree = "<group>"; };
 		186FEC3F2DE20EF5008647FD /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		186FEC412DE2233A008647FD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		187BFCF52DDD06DA0029ED9B /* AppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 		187CE0752DEA3FC00056448C /* FriendsList */ = {
 			isa = PBXGroup;
 			children = (
+				185319742DF311E000AB7BB9 /* FriendListView.swift */,
 			);
 			path = FriendsList;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				1846C8832DD9169C00AEE854 /* AuthViewModel.swift in Sources */,
 				187CE0772DEA3FFE0056448C /* ExploreListView.swift in Sources */,
 				18809C9C2DDE3D720050DD23 /* UserModel.swift in Sources */,
+				185319752DF311E000AB7BB9 /* FriendListView.swift in Sources */,
 				18809C642DDDC9E40050DD23 /* AvatarSheetView.swift in Sources */,
 				182FB48F2DD510810056F573 /* LoginView.swift in Sources */,
 				187BFCF62DDD06DA0029ED9B /* AppExtension.swift in Sources */,

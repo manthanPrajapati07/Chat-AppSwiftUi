@@ -1,46 +1,27 @@
 //
-//  ExploreListView.swift
+//  FriendListView.swift
 //  WhatsAppClone
 //
-//  Created by Manthan on 31/05/25.
+//  Created by Manthan on 06/06/25.
 //
 
 import SwiftUI
 
-struct ExploreListView: View {
-    
+struct FriendListView: View {
     @EnvironmentObject var homeVM : HomeViewModel
-    @State private var showAlert : Bool = false
-    @State private var selectedUser: User? = nil
     
     var body: some View {
         ScrollView{
             VStack{
-                ForEach(homeVM.arrExploreUsers, id: \.userId) { userlist in
+                ForEach(homeVM.arrUserFriend, id: \.friendId) { friendList in
                     VStack{
                         Spacer()
-                        userListView(image: userlist.userAvatar, name: userlist.userName)
+                        userListView(image: friendList.friendAvatar, name: friendList.friendName, massage: friendList.lastMassage)
                         Spacer()
                         Divider()
                             .padding(.leading, 60)
                     }
                     .frame(height: 70)
-                    .onTapGesture {
-                        selectedUser = userlist
-                        showAlert.toggle()
-                    }
-                    .alert(isPresented: $showAlert) {
-                        Alert(
-                            title: Text("Add Friend ?"),
-                            message: Text("Do you want to make \(selectedUser?.userName ?? "user") your friend?"),
-                            primaryButton: .default(Text("Yes")) {
-                                if let selectedUser = selectedUser{
-                                    homeVM.addFriend(to: selectedUser)
-                                }
-                            },
-                            secondaryButton: .cancel()
-                        )
-                    }
                 }
             }
             .padding(.top, 20)
@@ -49,7 +30,8 @@ struct ExploreListView: View {
         }
     }
     
-    private func userListView(image: String, name: String)-> some View{
+    
+    private func userListView(image: String, name: String, massage: String)-> some View{
         HStack{
             Image(image)
                 .resizable()
@@ -65,13 +47,13 @@ struct ExploreListView: View {
                     Spacer()
                 }
                 HStack{
-                    Text("tap to make \(name) friend")
+                    Text(massage)
                         .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(Color.gray)
                         .italic()
                     Spacer()
                 }
-               
+                
             }
             .padding(.horizontal, 5)
             
@@ -83,5 +65,5 @@ struct ExploreListView: View {
 }
 
 #Preview {
-    ExploreListView()
+    FriendListView()
 }
