@@ -36,7 +36,7 @@ extension Color {
             g = Double((int >> 16) & 0xFF) / 255
             b = Double((int >> 8) & 0xFF) / 255
         } else {
-            r = 0; g = 0; b = 0 // Fallback to black if invalid
+            r = 0; g = 0; b = 0 
         }
         
         self.init(red: r, green: g, blue: b)
