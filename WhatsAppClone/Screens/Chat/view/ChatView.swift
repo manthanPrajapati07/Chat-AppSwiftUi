@@ -10,11 +10,14 @@ import SwiftUI
 struct ChatView: View {
     
     @StateObject var chatVM = ChatViewModel.shared
-   // @EnvironmentObject var homeVM : HomeViewModel
+    @EnvironmentObject var homeVM : HomeViewModel
+    @State private var message: String = ""
+    
+    @StateObject var authVM = AuthViewModel.shared
     
     var body: some View {
         VStack{
-            userListView(image: "userAvatar1", name: "Ankita", lastSeen: "online")
+            userListView(image: homeVM.selectedFriend!.friendAvatar, name:homeVM.selectedFriend!.friendName, lastSeen: homeVM.selectedFriend!.isFriendOnline)
             Divider()
             
             ScrollView{
@@ -30,12 +33,16 @@ struct ChatView: View {
                     }
                 }
             }
-            Spacer()
+            .background(Color.clear)
+            
+            bottomTextView()
+          //  Spacer()
         }
+        .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
     }
     
     
-    private func userListView(image: String, name: String, lastSeen: String)-> some View{
+    private func userListView(image: String, name: String, lastSeen: Bool)-> some View{
         HStack{
             Image(image)
                 .resizable()
@@ -51,7 +58,7 @@ struct ChatView: View {
                     Spacer()
                 }
                 HStack{
-                    Text(lastSeen)
+                    Text(lastSeen ? "online":"ofline")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(Color.gray)
                         .italic()
@@ -82,6 +89,38 @@ struct ChatView: View {
         
         }
         .frame(maxWidth: .infinity, alignment: aligment)
+    }
+    
+    private func bottomTextView() -> some View{
+        HStack{
+            HStack{
+                TextField("Message...", text: $message, axis: .vertical)
+                    .font(.system(size: 20, weight: .medium))
+                    .padding()
+            }
+            .frame(minHeight: 50)
+            .background(Color.white)
+            .cornerRadius(25)
+            .padding(.leading)
+            
+            Button {
+                
+            } label: {
+                HStack{
+                    Image("sendButton_icn")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .frame(height: 25)
+                }
+            }
+            .frame(width: 50, height: 50)
+            .background(Color.green).opacity(0.8)
+            .cornerRadius(25)
+            .padding([ .trailing])
+            .padding(.leading, 5)
+
+        }
+        .frame(maxHeight: 70 , alignment: .top)
     }
 }
 

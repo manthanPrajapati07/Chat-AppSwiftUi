@@ -19,7 +19,8 @@ final class HomeViewModel : ObservableObject{
     
     @Published var arrExploreUsers : [User] = []
     @Published var arrUserFriend : [FriendList] = []
-    
+    @Published var selectedFriend: FriendList? = nil
+
     
     func fetchUsers() {
         Task {

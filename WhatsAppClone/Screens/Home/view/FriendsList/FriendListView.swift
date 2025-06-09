@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FriendListView: View {
     @EnvironmentObject var homeVM : HomeViewModel
-    
+    @State private var navigateToChat : Bool = false
     var body: some View {
         ScrollView{
             VStack{
@@ -21,8 +21,22 @@ struct FriendListView: View {
                         Divider()
                             .padding(.leading, 60)
                     }
+                    .onTapGesture {
+                        homeVM.selectedFriend = friendList
+                        navigateToChat = true
+                    }
                     .frame(height: 70)
                 }
+                
+                NavigationLink(
+                              destination: ChatView()
+                                .environmentObject(homeVM),
+                              isActive: $navigateToChat,
+                              label: {
+                                  EmptyView()
+                              }
+                          )
+                          .hidden()
             }
             .padding(.top, 20)
             .padding(.bottom, 100)

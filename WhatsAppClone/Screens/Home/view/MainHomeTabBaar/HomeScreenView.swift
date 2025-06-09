@@ -14,8 +14,7 @@ struct HomeScreenView: View {
     @EnvironmentObject var authVM : AuthViewModel
 
     @State var isChatSelected : Bool = true
-    
-
+  
     var body: some View {
         NavigationStack{
             VStack{
