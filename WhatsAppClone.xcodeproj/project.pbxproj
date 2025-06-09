@@ -270,6 +270,7 @@
 		187FC7392DEAF573008EBA0A /* EmailSignIn */ = {
 			isa = PBXGroup;
 			children = (
+				187FC73A2DEAF5AB008EBA0A /* EmailSignInView.swift */,
 			);
 			path = EmailSignIn;
 			sourceTree = "<group>";
@@ -326,7 +327,6 @@
 			children = (
 				18B6CB472DDBA67700410B46 /* AddProfileDetailsView.swift */,
 				18809C632DDDC9E40050DD23 /* AvatarSheetView.swift */,
-				187FC73A2DEAF5AB008EBA0A /* EmailSignInView.swift */,
 			);
 			path = ProfileDetails;
 			sourceTree = "<group>";

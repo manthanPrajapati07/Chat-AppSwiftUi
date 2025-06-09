@@ -11,9 +11,12 @@ struct ChatView: View {
     
     @StateObject var chatVM = ChatViewModel.shared
     @EnvironmentObject var homeVM : HomeViewModel
-    @State private var message: String = ""
-    
     @StateObject var authVM = AuthViewModel.shared
+    @State private var message: String = ""
+ 
+    private var isValidInput : Bool{
+         !message.isEmptyOrWhitespace()
+    }
     
     var body: some View {
         VStack{
@@ -21,14 +24,15 @@ struct ChatView: View {
             Divider()
             
             ScrollView{
-                ForEach(0..<10){message in
-                    if message % 2 == 0{
-                        messageView(message: "hello", aligment: .leading, color: .gray, isSender: false)
-                            .padding(.vertical, 10)
+                ForEach(chatVM.arrMessages, id: \.MessageId){message in
+                    
+                    if message.MessageSenderId == AppFunctions.getCurrentUserId(){
+                        messageView(message: message.MessageText, aligment: .trailing, color: .blue, isSender: true)
+                            .padding(.vertical, 5)
                             .padding(.horizontal, 10)
                     }else{
-                        messageView(message: "hello manthan how are you? are you okeyy", aligment: .trailing, color: .blue, isSender: true)
-                            .padding(.vertical, 10)
+                        messageView(message: message.MessageText, aligment: .leading, color: .gray, isSender: false)
+                            .padding(.vertical, 5)
                             .padding(.horizontal, 10)
                     }
                 }
@@ -36,7 +40,9 @@ struct ChatView: View {
             .background(Color.clear)
             
             bottomTextView()
-          //  Spacer()
+         
+        }.onAppear {
+            chatVM.listenToMessages(with: homeVM.selectedFriend!.friendId)
         }
         .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
     }
@@ -78,7 +84,7 @@ struct ChatView: View {
         HStack{
             HStack{
                 Text(message)
-                    .font(.system(size: 24, weight: .medium))
+                    .font(.system(size: 22, weight: .medium))
                     .layoutPriority(0)
                     .padding(.vertical, 8)
                     .padding(.horizontal, 20)
@@ -102,9 +108,20 @@ struct ChatView: View {
             .background(Color.white)
             .cornerRadius(25)
             .padding(.leading)
+            .autocapitalization(.none)
             
             Button {
-                
+                if isValidInput{
+                    Task{
+                        do{
+                            try await chatVM.sendMessage(to: homeVM.selectedFriend!.friendId, text: message)
+                            message = ""
+                            UIApplication.shared.endEditing()
+                        } catch{
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
             } label: {
                 HStack{
                     Image("sendButton_icn")
