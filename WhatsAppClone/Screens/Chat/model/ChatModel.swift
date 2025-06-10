@@ -32,3 +32,9 @@ extension MessageModel{
         self.init(MessageId: MessageId, MessageSenderId: MessageSenderId, MessageReceiverId: MessageReceiverId, MessageText: MessageText, MessageTimestamp: MessageTimestamp, MessageIsSended: MessageIsSended, MessageIsRead: MessageIsRead)
     }
 }
+
+struct MessageTimeStamp {
+    let date: String
+    let day: String
+    let time: String
+}

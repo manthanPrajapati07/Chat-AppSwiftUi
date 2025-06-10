@@ -24,14 +24,14 @@ struct ChatView: View {
             Divider()
             
             ScrollView{
-                ForEach(chatVM.arrMessages, id: \.MessageId){message in
+                ForEach(chatVM.arrMessages, id: \.MessageId){ message in
                     
                     if message.MessageSenderId == AppFunctions.getCurrentUserId(){
-                        messageView(message: message.MessageText, aligment: .trailing, color: .blue, isSender: true)
+                        messageView(message: message, aligment: .trailing, color: .blue, isSender: true)
                             .padding(.vertical, 5)
                             .padding(.horizontal, 10)
                     }else{
-                        messageView(message: message.MessageText, aligment: .leading, color: .gray, isSender: false)
+                        messageView(message: message, aligment: .leading, color: .gray, isSender: false)
                             .padding(.vertical, 5)
                             .padding(.horizontal, 10)
                     }
@@ -80,14 +80,23 @@ struct ChatView: View {
     }
     
     
-    private func messageView(message: String, aligment : Alignment, color: Color, isSender: Bool) -> some View{
+    private func messageView(message: MessageModel, aligment : Alignment, color: Color, isSender: Bool) -> some View{
         HStack{
             HStack{
-                Text(message)
+                Text(message.MessageText)
                     .font(.system(size: 22, weight: .medium))
                     .layoutPriority(0)
                     .padding(.vertical, 8)
-                    .padding(.horizontal, 20)
+                    .padding(.leading, 20)
+                
+                VStack{
+                    Spacer()
+                    Text(AppFunctions.getMessageTimeSheet(from: message.MessageTimestamp).time)
+                        .font(.system(size: 10, weight: .regular))
+                        .padding(.trailing, 10)
+                        .padding(.bottom, 3)
+                }
+               
             }
             .background(color)
             .cornerRadius(20)

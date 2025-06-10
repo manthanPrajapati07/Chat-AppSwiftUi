@@ -134,5 +134,21 @@ final class AppFunctions{
     class func getCurrentUserDetail() -> User? {
         return AuthViewModel.shared.currentUser
     }
+    
+    class func getMessageTimeSheet(from milliseconds: Int) -> MessageTimeStamp {
+           let date = Date(timeIntervalSince1970: TimeInterval(milliseconds) / 1000)
+           let dateFormatter = DateFormatter()
+           
+           dateFormatter.dateFormat = "dd MMM yyyy"
+           let formattedDate = dateFormatter.string(from: date)
+           
+           dateFormatter.dateFormat = "EEEE"
+           let formattedDay = dateFormatter.string(from: date)
+           
+           dateFormatter.dateFormat = "hh:mm a"
+           let formattedTime = dateFormatter.string(from: date)
+           
+           return MessageTimeStamp(date: formattedDate, day: formattedDay, time: formattedTime)
+       }
 }
 
