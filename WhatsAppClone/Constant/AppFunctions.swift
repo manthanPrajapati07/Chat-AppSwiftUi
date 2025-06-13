@@ -150,5 +150,14 @@ final class AppFunctions{
            
            return MessageTimeStamp(date: formattedDate, day: formattedDay, time: formattedTime)
        }
+    
+    class func getTodaysDate() -> String {
+        var todaysDate = NSDate()
+        var dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        var DateInFormat = dateFormatter.string(from: todaysDate as Date)
+
+        return DateInFormat
+    }
 }
 

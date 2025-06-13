@@ -21,19 +21,40 @@ struct ChatView: View {
     var body: some View {
         VStack{
             userListView(image: homeVM.selectedFriend!.friendAvatar, name:homeVM.selectedFriend!.friendName, lastSeen: homeVM.selectedFriend!.isFriendOnline)
-            Divider()
             
-            ScrollView{
-                ForEach(chatVM.arrMessages, id: \.MessageId){ message in
+            Divider()
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    let groupedMessages = Dictionary(grouping: chatVM.arrMessages) { message in
+                        AppFunctions.getMessageTimeSheet(from: message.MessageTimestamp).date
+                    }
+                    let sortedDates = groupedMessages.keys.sorted { date1, date2 in
+                        guard
+                            let t1 = groupedMessages[date1]?.first?.MessageTimestamp,
+                            let t2 = groupedMessages[date2]?.first?.MessageTimestamp
+                        else { return false }
+                        return t1 < t2
+                    }
                     
-                    if message.MessageSenderId == AppFunctions.getCurrentUserId(){
-                        messageView(message: message, aligment: .trailing, color: .blue, isSender: true)
+                    ForEach(sortedDates, id: \.self) { date in
+                        // Date header
+                        if let anyMessage = groupedMessages[date]?.first {
+                            chatRowView(timeStamp: anyMessage.MessageTimestamp)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 5)
+                        }
+                        
+                        ForEach(groupedMessages[date]!, id: \.MessageId) { message in
+                            Group {
+                                if message.MessageSenderId == AppFunctions.getCurrentUserId() {
+                                    messageView(message: message, aligment: .trailing, color: .blue, isSender: true)
+                                } else {
+                                    messageView(message: message, aligment: .leading, color: .gray, isSender: false)
+                                }
+                            }
                             .padding(.vertical, 5)
                             .padding(.horizontal, 10)
-                    }else{
-                        messageView(message: message, aligment: .leading, color: .gray, isSender: false)
-                            .padding(.vertical, 5)
-                            .padding(.horizontal, 10)
+                        }
                     }
                 }
             }
@@ -148,6 +169,23 @@ struct ChatView: View {
         }
         .frame(maxHeight: 70 , alignment: .top)
     }
+    
+    private func chatRowView(timeStamp: Int) -> some View {
+        let date = AppFunctions.getMessageTimeSheet(from: timeStamp).date
+        let day = AppFunctions.getMessageTimeSheet(from: timeStamp).day
+
+        return HStack {
+            Spacer()
+            Text("\(date) • \(day)")
+                .font(.caption)
+                .foregroundColor(.gray)
+                .padding(6)
+                .background(Color.white.opacity(0.8))
+                .cornerRadius(10)
+            Spacer()
+        }
+    }
+
 }
 
 #Preview {
