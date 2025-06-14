@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUICore
 
 @MainActor
 final class ChatViewModel: ObservableObject{
@@ -15,6 +16,7 @@ final class ChatViewModel: ObservableObject{
     private init(){}
     
     @Published var arrMessages : [MessageModel] = []
+    @Published var observedFriend: FriendList? = nil
     
     func sendMessage(to user: String, text: String) async throws {
         let currentTimeStamp = AppFunctions.getCurrentTimestamp()
@@ -36,6 +38,27 @@ final class ChatViewModel: ObservableObject{
                 guard let documents = snapshot?.documents else { return }
                 self.arrMessages = documents.compactMap {
                     try? $0.data(as: MessageModel.self)
+                }
+            }
+    }
+    
+    
+    func listenToFriendDetailChange(with uid: String) {
+        db.collection("User").document(uid)
+            .addSnapshotListener { documentSnapshot, error in
+                guard let document = documentSnapshot, document.exists else {
+                    print("Document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+
+                do {
+                     let user = try document.data(as: FriendList.self)
+                        DispatchQueue.main.async {
+                            self.observedFriend = user
+                        }
+                    
+                } catch {
+                    print("Failed to decode user: \(error.localizedDescription)")
                 }
             }
     }
