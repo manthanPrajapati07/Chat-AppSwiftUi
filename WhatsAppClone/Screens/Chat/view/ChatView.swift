@@ -13,7 +13,6 @@ struct ChatView: View {
     @EnvironmentObject var homeVM : HomeViewModel
     @StateObject var authVM = AuthViewModel.shared
     @State private var message: String = ""
-//    @State var isMessageSend: Bool = false
     @State private var shouldScrollToBottom: Bool = false
     @State private var didInitialScroll: Bool = false
     
@@ -25,73 +24,85 @@ struct ChatView: View {
     
     var body: some View {
         VStack{
-            userListView(image: homeVM.selectedFriend!.friendAvatar, name:homeVM.selectedFriend!.friendName, lastSeen: homeVM.selectedFriend!.isFriendOnline)
-            
-            Divider()
-            ScrollViewReader { scrollViewProxy in
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        let groupedMessages = Dictionary(grouping: chatVM.arrMessages) { message in
-                            AppFunctions.getMessageTimeSheet(from: message.MessageTimestamp).date
-                        }
-                        let sortedDates = groupedMessages.keys.sorted { date1, date2 in
-                            guard
-                                let t1 = groupedMessages[date1]?.first?.MessageTimestamp,
-                                let t2 = groupedMessages[date2]?.first?.MessageTimestamp
-                            else { return false }
-                            return t1 < t2
-                        }
-                        
-                        ForEach(sortedDates, id: \.self) { date in
-                            // Date header
-                            if let anyMessage = groupedMessages[date]?.first {
-                                chatRowView(timeStamp: anyMessage.MessageTimestamp)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 5)
-                            }
-                            
-                            ForEach(groupedMessages[date]!, id: \.MessageId) { message in
-                                Group {
-                                    if message.MessageSenderId == AppFunctions.getCurrentUserId() {
-                                        messageView(message: message, aligment: .trailing, color: .blue, isSender: true)
-                                    } else {
-                                        messageView(message: message, aligment: .leading, color: .gray, isSender: false)
+            if chatVM.userDetailFound{
+                VStack{
+                    userListView(image: chatVM.observedFriend!.userAvatar, name:chatVM.observedFriend!.userName, lastSeen: chatVM.observedFriend!.isUserOnline)
+                    
+                    Divider()
+                    ScrollViewReader { scrollViewProxy in
+                        ScrollView {
+                            LazyVStack(spacing: 0) {
+                                let groupedMessages = Dictionary(grouping: chatVM.arrMessages) { message in
+                                    AppFunctions.getMessageTimeSheet(from: message.MessageTimestamp).date
+                                }
+                                let sortedDates = groupedMessages.keys.sorted { date1, date2 in
+                                    guard
+                                        let t1 = groupedMessages[date1]?.first?.MessageTimestamp,
+                                        let t2 = groupedMessages[date2]?.first?.MessageTimestamp
+                                    else { return false }
+                                    return t1 < t2
+                                }
+                                
+                                ForEach(sortedDates, id: \.self) { date in
+                                    // Date header
+                                    if let anyMessage = groupedMessages[date]?.first {
+                                        chatRowView(timeStamp: anyMessage.MessageTimestamp)
+                                            .frame(maxWidth: .infinity)
+                                            .padding(.vertical, 5)
+                                    }
+                                    
+                                    ForEach(groupedMessages[date]!, id: \.MessageId) { message in
+                                        Group {
+                                            if message.MessageSenderId == AppFunctions.getCurrentUserId() {
+                                                messageView(message: message, aligment: .trailing, color: .blue, isSender: true, isMessageRead: message.MessageIsRead)
+                                            } else {
+                                                messageView(message: message, aligment: .leading, color: .gray, isSender: false, isMessageRead: message.MessageIsRead)
+                                                    .onAppear{
+                                                        Task{
+                                                          await chatVM.setMesssageRead(to: homeVM.selectedFriend!.friendId, messageId: message.MessageId)
+                                                        }
+                                                    }
+                                            }
+                                        }
+                                        .padding(.vertical, 5)
+                                        .padding(.horizontal, 10)
                                     }
                                 }
-                                .padding(.vertical, 5)
-                                .padding(.horizontal, 10)
                             }
                         }
-                    }
-                }
-                .background(Color.clear)
-                .onAppear {
-                        // 👇 Scroll only on first appear
-                        if !didInitialScroll {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                if let lastId = chatVM.arrMessages.last?.MessageId {
-                                    scrollViewProxy.scrollTo(lastId, anchor: .bottom)
-                                    didInitialScroll = true
+                        .background(Color.clear)
+                        .onAppear {
+                            // 👇 Scroll only on first appear
+                            if !didInitialScroll {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    if let lastId = chatVM.arrMessages.last?.MessageId {
+                                        scrollViewProxy.scrollTo(lastId, anchor: .bottom)
+                                        didInitialScroll = true
+                                    }
                                 }
                             }
                         }
-                    }
-                .onChange(of: shouldScrollToBottom) { shouldScroll in
-                    if shouldScroll {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            if let lastMessageId = chatVM.arrMessages.last?.MessageId {
-                                scrollViewProxy.scrollTo(lastMessageId, anchor: .bottom)
+                        .onChange(of: shouldScrollToBottom) { shouldScroll in
+                            if shouldScroll {
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    if let lastMessageId = chatVM.arrMessages.last?.MessageId {
+                                        scrollViewProxy.scrollTo(lastMessageId, anchor: .bottom)
+                                    }
+                                }
+                                shouldScrollToBottom = false
                             }
                         }
-                        shouldScrollToBottom = false
                     }
+                    
+                    bottomTextView()
+                    
                 }
             }
             
-            bottomTextView()
-         
-        }.onAppear {
+        }
+        .onAppear {
             chatVM.listenToMessages(with: homeVM.selectedFriend!.friendId)
+            chatVM.listenToFriendDetailChange(with: homeVM.selectedFriend!.friendId)
         }
         .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
     }
@@ -129,7 +140,7 @@ struct ChatView: View {
     }
     
     
-    private func messageView(message: MessageModel, aligment : Alignment, color: Color, isSender: Bool) -> some View{
+    private func messageView(message: MessageModel, aligment : Alignment, color: Color, isSender: Bool, isMessageRead: Bool) -> some View{
         HStack{
             HStack{
                 Text(message.MessageText)
@@ -138,13 +149,20 @@ struct ChatView: View {
                     .padding(.vertical, 8)
                     .padding(.leading, 20)
                 
-                VStack{
-                    Spacer()
+                HStack(spacing: 5){
+                    
                     Text(AppFunctions.getMessageTimeSheet(from: message.MessageTimestamp).time)
                         .font(.system(size: 10, weight: .regular))
-                        .padding(.trailing, 10)
-                        .padding(.bottom, 3)
+                    
+                    if isSender{
+                        
+                        Image(isMessageRead ? "doubleTick" : "SingleTick")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20,height: 20)
+                    }
                 }
+                .padding(.trailing)
                
             }
             .background(color)

@@ -159,5 +159,17 @@ final class AppFunctions{
 
         return DateInFormat
     }
+    
+    @MainActor
+      static func setUserOnlineStatus(_ isOnline: Bool) async {
+          guard let uid = Auth.auth().currentUser?.uid else { return }
+          let ref = db.collection("User").document(uid)
+          do {
+              try await ref.updateData(["isUserOnline": isOnline])
+              print("✅ Updated isUserOnline to \(isOnline)")
+          } catch {
+              print("❌ Failed to update: \(error.localizedDescription)")
+          }
+      }
 }
 

@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseAuth
+
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -29,17 +30,45 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // Your other handling logic
         completionHandler(.newData)
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+            // Called when app is terminated (swipe kill)
+            Task {
+                await AppFunctions.setUserOnlineStatus(false)
+            }
+        }
 }
 
 @main
 struct WhatsAppCloneApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @Environment(\.scenePhase) var scenePhase
     
     @StateObject var authVM = AuthViewModel.shared
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onChange(of: scenePhase) { newPhase in
+                    print("Scene phase changed: \(newPhase)")
+                    DispatchQueue.main.async {
+                        Task {
+                            switch newPhase {
+                            case .active:
+                                print("App became active")
+                                await AppFunctions.setUserOnlineStatus(true)
+                            case .background:
+                                print("App moved to background")
+                                await AppFunctions.setUserOnlineStatus(false)
+                            case .inactive:
+                                print("App became inactive")
+                                await AppFunctions.setUserOnlineStatus(false)
+                            default:
+                                break
+                            }
+                        }
+                    }
+                }
         }
         .environmentObject(authVM)
     }

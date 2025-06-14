@@ -16,7 +16,8 @@ final class ChatViewModel: ObservableObject{
     private init(){}
     
     @Published var arrMessages : [MessageModel] = []
-    @Published var observedFriend: FriendList? = nil
+    @Published var observedFriend: User? = nil
+    @Published var userDetailFound: Bool = false
     
     func sendMessage(to user: String, text: String) async throws {
         let currentTimeStamp = AppFunctions.getCurrentTimestamp()
@@ -39,6 +40,12 @@ final class ChatViewModel: ObservableObject{
                 self.arrMessages = documents.compactMap {
                     try? $0.data(as: MessageModel.self)
                 }
+                Task{
+                    if let lastMessage = self.arrMessages.last?.MessageText {
+                        await self.updateLastMesssageInFirestore(uid: user, lastMessage: lastMessage)
+                    }
+                }
+                
             }
     }
     
@@ -52,14 +59,50 @@ final class ChatViewModel: ObservableObject{
                 }
 
                 do {
-                     let user = try document.data(as: FriendList.self)
+                     let user = try document.data(as: User.self)
                         DispatchQueue.main.async {
                             self.observedFriend = user
+                            self.userDetailFound = true
                         }
                     
                 } catch {
                     print("Failed to decode user: \(error.localizedDescription)")
                 }
             }
+    }
+    
+    
+    func updateLastMesssageInFirestore(uid : String, lastMessage: String) async {
+        let lastMessage: [String: Any] = [
+            "lastMassage": lastMessage
+        ]
+        do {
+            try await db
+                .collection("Friends")
+                .document(AppFunctions.getCurrentUserId())
+                .collection("FriendList")
+                .document(uid)
+                .updateData(lastMessage)
+        }
+        catch{
+            print(error.localizedDescription)
+        }
+    }
+    
+    func setMesssageRead(to user: String, messageId: String) async {
+        let currentTimeStamp = AppFunctions.getCurrentTimestamp()
+        let currentUserId = AppFunctions.getCurrentUserId()
+        let chatId = [currentUserId, user].sorted().joined()
+        let messageRef = db.collection("Chats").document(chatId).collection("messages").document(messageId)
+        
+        let updateMessage : [String : Any] = [
+            "MessageIsRead" : true
+        ]
+        do{
+            try await messageRef.updateData(updateMessage)
+        }
+        catch{
+            print(error.localizedDescription)
+        }
     }
 }
