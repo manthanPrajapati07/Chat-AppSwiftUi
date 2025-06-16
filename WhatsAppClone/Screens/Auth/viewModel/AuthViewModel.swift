@@ -186,7 +186,7 @@ final class AuthViewModel: ObservableObject{
     
     func userEntryInFireStore(userUid : String ,userName : String, UserBio : String, userEmail: String, phoneNumber: String, completion : (Bool) -> ()) async {
         AppFunctions.showLoader()
-        let user = User(userId: userUid, userName: userName, userPhone: phoneNumber, userBio: UserBio, userAvatar: userAvatar?.avatarName ?? "userAvatar1", userEmail: userEmail, isUserOnline: true)
+        let user = User(userId: userUid, userName: userName, userPhone: phoneNumber, userBio: UserBio, userAvatar: userAvatar?.avatarName ?? "userAvatar1", userEmail: userEmail, isUserOnline: true, isUserTyping: false)
         print(user)
         AppFunctions.hideLoader()
         do {

@@ -16,7 +16,7 @@ struct FriendListView: View {
                 ForEach(homeVM.arrUserFriend, id: \.friendId) { friendList in
                     VStack{
                         Spacer()
-                        userListView(image: friendList.friendAvatar, name: friendList.friendName, massage: friendList.lastMassage)
+                        userListView(image: friendList.friendAvatar, name: friendList.friendName, massage: friendList.lastMassage ?? nil)
                         Spacer()
                         Divider()
                             .padding(.leading, 60)
@@ -45,7 +45,7 @@ struct FriendListView: View {
     }
     
     
-    private func userListView(image: String, name: String, massage: String)-> some View{
+    private func userListView(image: String, name: String, massage: MessageModel?)-> some View{
         HStack{
             Image(image)
                 .resizable()
@@ -60,8 +60,19 @@ struct FriendListView: View {
                         .foregroundStyle(Color.black)
                     Spacer()
                 }
-                HStack{
-                    Text(massage)
+                HStack(spacing: 5){
+                    if let messageFound = massage{
+                        let isSender = messageFound.MessageSenderId == AppFunctions.getCurrentUserId()
+                        let isMessageRead = messageFound.MessageIsRead
+                        if isSender{
+                            Image(isMessageRead ? "doubleTick" : "SingleTick")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20,height: 20)
+                        }
+                    }
+                    
+                    Text(massage?.MessageText ?? "Start chat with \(name)")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(Color.gray)
                         .italic()

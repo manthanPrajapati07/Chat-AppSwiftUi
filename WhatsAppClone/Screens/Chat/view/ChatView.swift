@@ -179,6 +179,16 @@ struct ChatView: View {
                 TextField("Message...", text: $message, axis: .vertical)
                     .font(.system(size: 20, weight: .medium))
                     .padding()
+                    .onChange(of: message) { newValue in
+                        Task{
+                            await AppFunctions.setUserTypingStatus(true)
+                        }
+                        AppFunctions.delay(1.0) {
+                            Task{
+                                await AppFunctions.setUserTypingStatus(false)
+                            }
+                        }
+                    }
             }
             .frame(minHeight: 50)
             .background(Color.white)
@@ -214,7 +224,7 @@ struct ChatView: View {
             .cornerRadius(25)
             .padding([ .trailing])
             .padding(.leading, 5)
-
+            
         }
         .frame(maxHeight: 70 , alignment: .top)
     }

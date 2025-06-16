@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUICore
+import Firebase
 
 @MainActor
 final class ChatViewModel: ObservableObject{
@@ -41,7 +42,7 @@ final class ChatViewModel: ObservableObject{
                     try? $0.data(as: MessageModel.self)
                 }
                 Task{
-                    if let lastMessage = self.arrMessages.last?.MessageText {
+                    if let lastMessage = self.arrMessages.last{
                         await self.updateLastMesssageInFirestore(uid: user, lastMessage: lastMessage)
                     }
                 }
@@ -71,23 +72,60 @@ final class ChatViewModel: ObservableObject{
             }
     }
     
+//    
+//    func updateLastMesssageInFirestore(uid : String, lastMessage: MessageModel) async {
+//        
+//        do{
+//            let encodedMessage = try Firestore.Encoder().encode(lastMessage)
+//            
+//            do {
+//                try await db
+//                    .collection("Friends")
+//                    .document(AppFunctions.getCurrentUserId())
+//                    .collection("FriendList")
+//                    .document(uid)
+//                    .updateData([
+//                        "lastMassage": encodedMessage,
+//                        "lastMassageTime":lastMessage.MessageTimestamp
+//                    ])
+//            }
+//            catch{
+//                print(error.localizedDescription)
+//            }
+//        }
+//        catch{
+//            print(error.localizedDescription)
+//        }
+//    }
     
-    func updateLastMesssageInFirestore(uid : String, lastMessage: String) async {
-        let lastMessage: [String: Any] = [
-            "lastMassage": lastMessage
-        ]
+    func updateLastMesssageInFirestore(uid: String, lastMessage: MessageModel) async {
         do {
+            let encodedMessage = try Firestore.Encoder().encode(lastMessage)
+            let update: [String: Any] = [
+                "lastMassage": encodedMessage,
+                "lastMassageTime": lastMessage.MessageTimestamp
+            ]
+
+            let currentUserId = AppFunctions.getCurrentUserId()
+
             try await db
                 .collection("Friends")
-                .document(AppFunctions.getCurrentUserId())
+                .document(currentUserId)
                 .collection("FriendList")
                 .document(uid)
-                .updateData(lastMessage)
-        }
-        catch{
-            print(error.localizedDescription)
+                .updateData(update)
+
+            try await db
+                .collection("Friends")
+                .document(uid)
+                .collection("FriendList")
+                .document(currentUserId)
+                .updateData(update)
+        } catch {
+            print("❌ Failed to update last message:", error.localizedDescription)
         }
     }
+
     
     func setMesssageRead(to user: String, messageId: String) async {
         let currentTimeStamp = AppFunctions.getCurrentTimestamp()

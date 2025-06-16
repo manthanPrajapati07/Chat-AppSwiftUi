@@ -171,5 +171,17 @@ final class AppFunctions{
               print("❌ Failed to update: \(error.localizedDescription)")
           }
       }
+    
+    @MainActor
+      static func setUserTypingStatus(_ isTyping: Bool) async {
+          guard let uid = Auth.auth().currentUser?.uid else { return }
+          let ref = db.collection("User").document(uid)
+          do {
+              try await ref.updateData(["isUserTyping": isTyping])
+              print("✅ Updated isUserOnline to \(isTyping)")
+          } catch {
+              print("❌ Failed to update: \(error.localizedDescription)")
+          }
+      }
 }
 

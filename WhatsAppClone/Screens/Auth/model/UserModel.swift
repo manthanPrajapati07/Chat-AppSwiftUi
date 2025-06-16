@@ -15,6 +15,7 @@ struct User : Codable, Equatable, Hashable {
     let userAvatar : String
     let userEmail : String
     let isUserOnline: Bool
+    let isUserTyping: Bool
 }
 extension User{
     init?(dictionary: [String : Any], id: String) {
@@ -25,9 +26,10 @@ extension User{
                 let userEmail = dictionary["userEmail"] as? String,
                 let userName = dictionary["userName"] as? String,
                 let userPhone = dictionary["userPhone"] as? String,
-                let isUserOnline = dictionary["isUserOnline"] as? Bool
+                let isUserOnline = dictionary["isUserOnline"] as? Bool,
+                let isUserTyping = dictionary["isUserTyping"] as? Bool
         else { return nil }
         
-        self.init(userId: userId, userName: userName, userPhone: userPhone, userBio: userBio, userAvatar: userAvatar, userEmail: userEmail, isUserOnline: isUserOnline)
+        self.init(userId: userId, userName: userName, userPhone: userPhone, userBio: userBio, userAvatar: userAvatar, userEmail: userEmail, isUserOnline: isUserOnline, isUserTyping: isUserTyping)
     }
 }
