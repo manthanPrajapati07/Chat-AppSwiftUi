@@ -125,6 +125,35 @@ final class ChatViewModel: ObservableObject{
             print("❌ Failed to update last message:", error.localizedDescription)
         }
     }
+    
+    
+    func updateTypingStatus(uid: String, isTypingStatus: Bool) async {
+        do {
+            let update: [String: Any] = [
+                "isFriendTyping": isTypingStatus
+            ]
+
+            let currentUserId = AppFunctions.getCurrentUserId()
+
+            try await db
+                .collection("Friends")
+                .document(currentUserId)
+                .collection("FriendList")
+                .document(uid)
+                .updateData(update)
+
+            try await db
+                .collection("Friends")
+                .document(uid)
+                .collection("FriendList")
+                .document(currentUserId)
+                .updateData(update)
+            
+            print("typingStatus set \(isTypingStatus)")
+        } catch {
+            print("❌ Failed to update last message:", error.localizedDescription)
+        }
+    }
 
     
     func setMesssageRead(to user: String, messageId: String) async {

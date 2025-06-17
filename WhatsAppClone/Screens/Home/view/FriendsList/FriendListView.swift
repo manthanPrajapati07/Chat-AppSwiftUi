@@ -16,7 +16,7 @@ struct FriendListView: View {
                 ForEach(homeVM.arrUserFriend, id: \.friendId) { friendList in
                     VStack{
                         Spacer()
-                        userListView(image: friendList.friendAvatar, name: friendList.friendName, massage: friendList.lastMassage ?? nil)
+                        userListView(image: friendList.friendAvatar, name: friendList.friendName, massage: friendList.lastMassage ?? nil, isUserTyping: friendList.isFriendTyping)
                         Spacer()
                         Divider()
                             .padding(.leading, 60)
@@ -45,7 +45,7 @@ struct FriendListView: View {
     }
     
     
-    private func userListView(image: String, name: String, massage: MessageModel?)-> some View{
+    private func userListView(image: String, name: String, massage: MessageModel?, isUserTyping: Bool)-> some View{
         HStack{
             Image(image)
                 .resizable()
@@ -71,12 +71,19 @@ struct FriendListView: View {
                                 .frame(width: 20,height: 20)
                         }
                     }
-                    
-                    Text(massage?.MessageText ?? "Start chat with \(name)")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(Color.gray)
-                        .italic()
-                    Spacer()
+                    if isUserTyping{
+                        Text("Typing....")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundStyle(Color.gray)
+                            .italic()
+                        Spacer()
+                    }else{
+                        Text(massage?.MessageText ?? "Start chat with \(name)")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundStyle(Color.gray)
+                            .italic()
+                        Spacer()
+                    }
                 }
                 
             }

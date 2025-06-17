@@ -74,9 +74,9 @@ final class HomeViewModel : ObservableObject{
             
             if let currentUserDetail = AppFunctions.getCurrentUserDetail() {
                 
-                let friend = FriendList(friendId: user.userId, friendAvatar: user.userAvatar, friendBio: user.userBio, friendEmail: user.userEmail, friendName: user.userName, friendPhone: user.userPhone, isFriendOnline: user.isUserOnline, friendshipCreatedTime: timestamp, lastMassageTime: timestamp, lastMassage: nil)
+                let friend = FriendList(friendId: user.userId, friendAvatar: user.userAvatar, friendBio: user.userBio, friendEmail: user.userEmail, friendName: user.userName, friendPhone: user.userPhone, isFriendOnline: user.isUserOnline, isFriendTyping: false, friendshipCreatedTime: timestamp, lastMassageTime: timestamp, lastMassage: nil)
                 
-                let reverseFriendToUser = FriendList(friendId: currentUserDetail.userId, friendAvatar: currentUserDetail.userAvatar, friendBio: currentUserDetail.userBio, friendEmail: currentUserDetail.userEmail, friendName: currentUserDetail.userName, friendPhone: currentUserDetail.userPhone, isFriendOnline: currentUserDetail.isUserOnline, friendshipCreatedTime: timestamp, lastMassageTime: timestamp, lastMassage: nil)
+                let reverseFriendToUser = FriendList(friendId: currentUserDetail.userId, friendAvatar: currentUserDetail.userAvatar, friendBio: currentUserDetail.userBio, friendEmail: currentUserDetail.userEmail, friendName: currentUserDetail.userName, friendPhone: currentUserDetail.userPhone, isFriendOnline: currentUserDetail.isUserOnline, isFriendTyping: false, friendshipCreatedTime: timestamp, lastMassageTime: timestamp, lastMassage: nil)
                 
                 do {
                     try db
@@ -181,6 +181,7 @@ final class HomeViewModel : ObservableObject{
                     if let index = self.arrUserFriend.firstIndex(where: { $0.friendId == friendId }) {
                         self.arrUserFriend[index] = updatedFriend
                         print("✅ LIVE UPDATE for \(friendId): \(updatedFriend.lastMassage?.MessageText ?? "nil")")
+                        print("✅ LIVE UPDATE for \(friendId): \(updatedFriend.isFriendTyping)")
                     }
                 }
             }

@@ -15,6 +15,7 @@ struct FriendList: Codable, Equatable, Hashable{
     let friendName: String
     let friendPhone: String
     let isFriendOnline: Bool
+    let isFriendTyping: Bool
     let friendshipCreatedTime: Int
     let lastMassageTime: Int
     let lastMassage: MessageModel?
@@ -49,6 +50,7 @@ extension FriendList {
             let friendName = dictionary["friendName"] as? String,
             let friendPhone = dictionary["friendPhone"] as? String,
             let isFriendOnline = dictionary["isFriendOnline"] as? Bool,
+            let isFriendTyping = dictionary["isFriendTyping"] as? Bool,
             let friendshipCreatedTime = dictionary["friendshipCreatedTime"] as? Int,
             let lastMassageTime = dictionary["lastMassageTime"] as? Int
         else {
@@ -73,6 +75,7 @@ extension FriendList {
             friendName: friendName,
             friendPhone: friendPhone,
             isFriendOnline: isFriendOnline,
+            isFriendTyping: isFriendTyping,
             friendshipCreatedTime: friendshipCreatedTime,
             lastMassageTime: lastMassageTime,
             lastMassage: decodedLastMessage

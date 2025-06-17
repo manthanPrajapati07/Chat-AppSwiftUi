@@ -15,9 +15,11 @@ struct ChatView: View {
     @State private var message: String = ""
     @State private var shouldScrollToBottom: Bool = false
     @State private var didInitialScroll: Bool = false
-    
+    @State var isTypingStart : Bool = false
+    @State private var typingTimer: Timer? = nil
 
- 
+    let TYPING_TIMEOUT: TimeInterval = 2.0
+    
     private var isValidInput : Bool{
          !message.isEmptyOrWhitespace()
     }
@@ -180,15 +182,33 @@ struct ChatView: View {
                     .font(.system(size: 20, weight: .medium))
                     .padding()
                     .onChange(of: message) { newValue in
-                        Task{
-                            await AppFunctions.setUserTypingStatus(true)
-                        }
-                        AppFunctions.delay(1.0) {
-                            Task{
-                                await AppFunctions.setUserTypingStatus(false)
-                            }
-                        }
-                    }
+                                    typingTimer?.invalidate()
+                                    typingTimer = nil
+
+                                    if !isTypingStart {
+                                        isTypingStart = true
+                                        Task {
+                                            await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: true)
+                                        }
+                                    }
+                                    if newValue.isEmptyOrWhitespace() {
+                                        typingTimer?.invalidate()
+                                        typingTimer = nil
+                                        if isTypingStart {
+                                            Task {
+                                                await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: false)
+                                            }
+                                            isTypingStart = false
+                                        }
+                                    } else {
+                                        typingTimer = Timer.scheduledTimer(withTimeInterval: TYPING_TIMEOUT, repeats: false) { _ in
+                                            Task {
+                                                await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: false)
+                                            }
+                                            isTypingStart = false
+                                        }
+                                    }
+                                }
             }
             .frame(minHeight: 50)
             .background(Color.white)
