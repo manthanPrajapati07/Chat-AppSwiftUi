@@ -20,26 +20,6 @@ struct FriendList: Codable, Equatable, Hashable{
     let lastMassageTime: Int
     let lastMassage: MessageModel?
 }
-//
-//extension FriendList{
-//    init?(dictionary: [String : Any], id: String) {
-//        
-//        guard   let friendId = dictionary["friendId"] as? String,
-//                let friendAvatar = dictionary["friendAvatar"] as? String,
-//                let friendBio = dictionary["friendBio"] as? String,
-//                let friendEmail = dictionary["friendEmail"] as? String,
-//                let friendName = dictionary["friendName"] as? String,
-//                let friendPhone = dictionary["friendPhone"] as? String,
-//                let isFriendOnline = dictionary["isFriendOnline"] as? Bool,
-//                let friendshipCreatedTime = dictionary["friendshipCreatedTime"] as? Int,
-//                let lastMassageTime = dictionary["lastMassageTime"] as? Int
-//                    
-//        else { return nil }
-//        
-//        self.init(friendId: friendId, friendAvatar: friendAvatar, friendBio: friendBio, friendEmail: friendEmail, friendName: friendName, friendPhone: friendPhone, isFriendOnline: isFriendOnline, friendshipCreatedTime: friendshipCreatedTime, lastMassageTime: lastMassageTime, lastMassage: nil)
-//    }
-//}
-//
 extension FriendList {
     init?(dictionary: [String : Any], id: String) {
         guard

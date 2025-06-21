@@ -30,13 +30,13 @@
             filePath = "WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "emailSignUp(email:password:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "DAFF871D-C1AE-4C23-9627-2521644CFC33 - b1a9e8e6c980fbb2"
+                  uuid = "DAFF871D-C1AE-4C23-9627-2521644CFC33 - b1a9e8e6c980fdc0"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -46,11 +46,11 @@
                   urlString = "file:///Users/apple/Documents/GitHub/Chat-AppSwiftUi/WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "255"
-                  endingLineNumber = "255">
+                  startingLineNumber = "269"
+                  endingLineNumber = "269">
                </Location>
                <Location
-                  uuid = "DAFF871D-C1AE-4C23-9627-2521644CFC33 - b1a9e8e6c980fbb2"
+                  uuid = "DAFF871D-C1AE-4C23-9627-2521644CFC33 - b1a9e8e6c980fdc0"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -60,8 +60,8 @@
                   urlString = "file:///Users/apple/Documents/GitHub/Chat-AppSwiftUi/WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "255"
-                  endingLineNumber = "255">
+                  startingLineNumber = "269"
+                  endingLineNumber = "269">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -17,18 +17,19 @@ struct ChatView: View {
     @State private var didInitialScroll: Bool = false
     @State var isTypingStart : Bool = false
     @State private var typingTimer: Timer? = nil
+    @Environment(\.dismiss) var dismiss
 
     let TYPING_TIMEOUT: TimeInterval = 2.0
     
     private var isValidInput : Bool{
-         !message.isEmptyOrWhitespace()
+        !message.isEmptyOrWhitespace()
     }
     
     var body: some View {
         VStack{
             if chatVM.userDetailFound{
                 VStack{
-                    userListView(image: chatVM.observedFriend!.userAvatar, name:chatVM.observedFriend!.userName, lastSeen: chatVM.observedFriend!.isUserOnline)
+                    userListView(image: chatVM.observedFriend!.userAvatar, name:chatVM.observedFriend!.userName, lastSeen: chatVM.observedFriend!.isUserOnline, userTyping: chatVM.observedFriend!.isUserTyping)
                     
                     Divider()
                     ScrollViewReader { scrollViewProxy in
@@ -46,7 +47,6 @@ struct ChatView: View {
                                 }
                                 
                                 ForEach(sortedDates, id: \.self) { date in
-                                    // Date header
                                     if let anyMessage = groupedMessages[date]?.first {
                                         chatRowView(timeStamp: anyMessage.MessageTimestamp)
                                             .frame(maxWidth: .infinity)
@@ -56,12 +56,12 @@ struct ChatView: View {
                                     ForEach(groupedMessages[date]!, id: \.MessageId) { message in
                                         Group {
                                             if message.MessageSenderId == AppFunctions.getCurrentUserId() {
-                                                messageView(message: message, aligment: .trailing, color: .blue, isSender: true, isMessageRead: message.MessageIsRead)
+                                                messageView(message: message, aligment: .trailing, color: authVM.userAvatar?.primaryThemeColor ?? Color.blue, isSender: true, isMessageRead: message.MessageIsRead)
                                             } else {
-                                                messageView(message: message, aligment: .leading, color: .gray, isSender: false, isMessageRead: message.MessageIsRead)
+                                                messageView(message: message, aligment: .leading, color: authVM.userAvatar?.secondaryThemeColor ?? Color.gray, isSender: false, isMessageRead: message.MessageIsRead)
                                                     .onAppear{
                                                         Task{
-                                                          await chatVM.setMesssageRead(to: homeVM.selectedFriend!.friendId, messageId: message.MessageId)
+                                                            await chatVM.setMesssageRead(to: homeVM.selectedFriend!.friendId, messageId: message.MessageId)
                                                         }
                                                     }
                                             }
@@ -107,16 +107,26 @@ struct ChatView: View {
             chatVM.listenToFriendDetailChange(with: homeVM.selectedFriend!.friendId)
         }
         .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
+        .navigationBarBackButtonHidden()
     }
     
     
-    private func userListView(image: String, name: String, lastSeen: Bool)-> some View{
+    private func userListView(image: String, name: String, lastSeen: Bool, userTyping: Bool)-> some View{
         HStack{
+            Button {
+                dismiss()
+            } label: {
+                Image("back")
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fit)
+                    .frame(height: 30)
+                    .padding(.leading, 10)
+            }
+
             Image(image)
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
                 .frame(height: 50)
-                .padding(.leading, 10)
             
             VStack(spacing: 0.0){
                 HStack{
@@ -125,14 +135,29 @@ struct ChatView: View {
                         .foregroundStyle(Color.black)
                     Spacer()
                 }
-                HStack{
-                    Text(lastSeen ? "online":"ofline")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(Color.gray)
-                        .italic()
-                    Spacer()
+                if userTyping{
+                    HStack{
+                        Text("Typing....")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundStyle(Color.gray)
+                            .italic()
+                        Spacer()
+                    }
+                }else{
+                    HStack{
+                        HStack{
+                            Text(lastSeen ? "online":"offline")
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundStyle(lastSeen ? Color.green : Color.red)
+                                .italic()
+                                .padding(5)
+                        }
+                        .background(Color.black)
+                        .frame(height: 17)
+                        .cornerRadius(8.5)
+                        Spacer()
+                    }
                 }
-                
             }
             .padding(.horizontal, 3)
             
@@ -165,12 +190,12 @@ struct ChatView: View {
                     }
                 }
                 .padding(.trailing)
-               
+                
             }
             .background(color)
             .cornerRadius(20)
             .padding(isSender ? .leading : .trailing)
-        
+            
         }
         .frame(maxWidth: .infinity, alignment: aligment)
     }
@@ -182,33 +207,36 @@ struct ChatView: View {
                     .font(.system(size: 20, weight: .medium))
                     .padding()
                     .onChange(of: message) { newValue in
-                                    typingTimer?.invalidate()
-                                    typingTimer = nil
-
-                                    if !isTypingStart {
-                                        isTypingStart = true
-                                        Task {
-                                            await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: true)
-                                        }
-                                    }
-                                    if newValue.isEmptyOrWhitespace() {
-                                        typingTimer?.invalidate()
-                                        typingTimer = nil
-                                        if isTypingStart {
-                                            Task {
-                                                await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: false)
-                                            }
-                                            isTypingStart = false
-                                        }
-                                    } else {
-                                        typingTimer = Timer.scheduledTimer(withTimeInterval: TYPING_TIMEOUT, repeats: false) { _ in
-                                            Task {
-                                                await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: false)
-                                            }
-                                            isTypingStart = false
-                                        }
-                                    }
+                        typingTimer?.invalidate()
+                        typingTimer = nil
+                        
+                        if !isTypingStart {
+                            isTypingStart = true
+                            Task {
+                                await AppFunctions.setUserTypingStatus(true)
+                                await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: true)
+                            }
+                        }
+                        if newValue.isEmptyOrWhitespace() {
+                            typingTimer?.invalidate()
+                            typingTimer = nil
+                            if isTypingStart {
+                                Task {
+                                    await AppFunctions.setUserTypingStatus(false)
+                                    await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: false)
                                 }
+                                isTypingStart = false
+                            }
+                        } else {
+                            typingTimer = Timer.scheduledTimer(withTimeInterval: TYPING_TIMEOUT, repeats: false) { _ in
+                                Task {
+                                    await AppFunctions.setUserTypingStatus(false)
+                                    await chatVM.updateTypingStatus(uid: homeVM.selectedFriend!.friendId, isTypingStatus: false)
+                                }
+                                isTypingStart = false
+                            }
+                        }
+                    }
             }
             .frame(minHeight: 50)
             .background(Color.white)
@@ -264,7 +292,7 @@ struct ChatView: View {
             Spacer()
         }
     }
-
+    
 }
 
 #Preview {

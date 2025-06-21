@@ -235,6 +235,20 @@ final class AuthViewModel: ObservableObject{
         }
     }
     
+    
+     func updateUserAvatar(_ avatar: UserAvatarsList?) async {
+          guard let uid = Auth.auth().currentUser?.uid else { return }
+          let ref = db.collection("User").document(firebaseUser!.uid)
+         if let avatar{
+             do {
+                 try await ref.updateData(["userAvatar": avatar.avatarName])
+                 self.userAvatar = avatar
+             } catch {
+                 print("❌ Failed to update: \(error.localizedDescription)")
+             }
+         }
+      }
+    
     func emailSignUp(email: String, password: String) async{
         AppFunctions.showLoader()
         Task{
@@ -363,8 +377,28 @@ final class AuthViewModel: ObservableObject{
             try auth.signOut()
             
         }catch {
-            
+            print(error.localizedDescription)
         }
     }
+    
+    
+    func deleteUser() {
+        guard let user = auth.currentUser else {return}
+
+        user.delete { [weak self] error in
+            if let error = error {
+                print("Error deleting user: \(error.localizedDescription)")
+            } else {
+                self?.firebaseUser = nil
+                AppFunctions.delay(1.0) {
+                    self?.currentUser = nil
+                    self?.userAvatar = nil
+                }
+                self?.isNumberVerified = false
+                print("User successfully deleted.")
+            }
+        }
+    }
+
     
 }

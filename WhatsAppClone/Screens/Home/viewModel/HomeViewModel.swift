@@ -23,7 +23,6 @@ final class HomeViewModel : ObservableObject{
     @Published var arrExploreUsers : [User] = []
     @Published var arrUserFriend : [FriendList] = []
     @Published var selectedFriend: FriendList? = nil
-
     
     private var activeFriendListeners: [String: ListenerRegistration] = [:]
 
@@ -31,21 +30,8 @@ final class HomeViewModel : ObservableObject{
         Task {
             AppFunctions.showLoader()
             
-          do {
-//                // Step 1: Fetch Friends
-//                let friendSnapshot = try await db
-//                    .collection("Friends")
-//                    .document(AppFunctions.getCurrentUserId())
-//                    .collection("FriendList")
-//                    .getDocuments()
-//                
-//                let fetchedFriends = friendSnapshot.documents.compactMap { doc -> FriendList? in
-//                    FriendList(dictionary: doc.data(), id: doc.documentID)
-//                }
-//                
-//                self.arrUserFriend = fetchedFriends
+            do {
                 
-                // Step 2: Fetch All Users
                 let exploreSnapshot = try await db
                     .collection("User")
                     .getDocuments()
@@ -57,7 +43,7 @@ final class HomeViewModel : ObservableObject{
                 let filteredUsers = allUsers.filter { $0.userId != AppFunctions.getCurrentUserId() }
                 let friendIds = self.arrUserFriend.map { $0.friendId }
                 self.arrExploreUsers = filteredUsers.filter { !friendIds.contains($0.userId) }
-
+                
             } catch {
                 print("Error in fetchUsers(): \(error.localizedDescription)")
             }
@@ -104,28 +90,6 @@ final class HomeViewModel : ObservableObject{
             AppFunctions.hideLoader()
         }
     }
-    
-    
-//    func listenToFriendDetailChange() {
-//        db.collection("Friends").document(AppFunctions.getCurrentUserId()).collection("FriendList").document()
-//            .addSnapshotListener { documentSnapshot, error in
-//                guard let document = documentSnapshot, document.exists else {
-//                    print("Document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
-//                    return
-//                }
-//
-//                do {
-//                     let user = try document.data(as: FriendList.self)
-//                        DispatchQueue.main.async {
-//                            self.arrUserFriend = fetchedFriends
-//                        }
-//                    
-//                } catch {
-//                    print("Failed to decode user: \(error.localizedDescription)")
-//                }
-//            }
-//    }
-
     func observeUserFriends() {
         let userId = AppFunctions.getCurrentUserId()
 

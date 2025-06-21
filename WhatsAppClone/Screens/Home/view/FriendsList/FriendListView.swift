@@ -59,6 +59,12 @@ struct FriendListView: View {
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Color.black)
                     Spacer()
+                    if let message = massage{
+                         let messageRead = message.MessageIsRead
+                        Text(messageRead ? "" :".")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundStyle(Color.black)
+                    }
                 }
                 HStack(spacing: 5){
                     if let messageFound = massage{
@@ -74,16 +80,30 @@ struct FriendListView: View {
                     if isUserTyping{
                         Text("Typing....")
                             .font(.system(size: 16, weight: .medium))
-                            .foregroundStyle(Color.gray)
+                            .foregroundStyle(Color.black)
                             .italic()
                         Spacer()
                     }else{
-                        Text(massage?.MessageText ?? "Start chat with \(name)")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundStyle(Color.gray)
-                            .italic()
-                        Spacer()
+                        if let messageFound = massage{
+                            let isMessageRead = messageFound.MessageIsRead
+                            Text(messageFound.MessageText)
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundStyle(isMessageRead ? Color.gray : Color.black)
+                                .italic()
+                            Spacer()
+                            
+                            Text(AppFunctions.getMessageTimeSheet(from: messageFound.MessageTimestamp).time)
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundStyle(isMessageRead ? Color.gray : Color.black)
+                        }else{
+                            Text(massage?.MessageText ?? "Start chat with \(name)")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundStyle(Color.gray)
+                                .italic()
+                            Spacer()
+                        }
                     }
+                    
                 }
                 
             }

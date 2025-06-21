@@ -33,11 +33,13 @@ struct HomeScreenView: View {
                     }else{
                         SettingView()
                             .environmentObject(authVM)
-                            .padding(.top, 50)
+                            .padding(.top, 20)
                     }
                     VStack{
-                        customSegment(with: homeVM.segmentArrey, selected: selectedValue)
-                            .padding(.horizontal, 10)
+                        if isChatSelected{
+                            customSegment(with: homeVM.segmentArrey, selected: selectedValue)
+                                .padding(.horizontal, 10)
+                        }
                         
                         Spacer()
                         
@@ -58,7 +60,7 @@ struct HomeScreenView: View {
     
     var customNavBarView: some View{
         ZStack{
-            Text("Chats")
+            Text(isChatSelected ? "Chats" : "Setting")
                 .font(.system(size: 20, weight: .medium))
             HStack{
                 Spacer()
