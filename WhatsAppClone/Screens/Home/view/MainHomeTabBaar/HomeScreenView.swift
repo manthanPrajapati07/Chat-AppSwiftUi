@@ -25,16 +25,19 @@ struct HomeScreenView: View {
                             ExploreListView()
                                 .environmentObject(homeVM)
                                 .padding(.top, 50)
+                                .transition(.move(edge: .trailing))
                         }else{
                             FriendListView()
                                 .environmentObject(homeVM)
                                 .padding(.top, 50)
+                                .transition(.move(edge: .trailing))
                         }
                     }else{
                         SettingView()
                             .environmentObject(authVM)
                             .environmentObject(homeVM)
                             .padding(.top, 20)
+                            .transition(.move(edge: .trailing))
                     }
                     VStack{
                         if isChatSelected{
@@ -50,6 +53,8 @@ struct HomeScreenView: View {
                 }
                 
             }
+            .animation(.easeInOut(duration: 0.5), value: isChatSelected)
+            .animation(.easeInOut(duration: 0.5), value: selectedValue)
             .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
             .onAppear(){
                 homeVM.fetchUsers()
