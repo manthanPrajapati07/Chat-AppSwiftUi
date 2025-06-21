@@ -45,7 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		180251312DD3B381009DFDD7 /* WhatsAppClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsAppClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		180251312DD3B381009DFDD7 /* Chat App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chat App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		182FB4872DD510810056F573 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		182FB4882DD510810056F573 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		182FB4892DD510810056F573 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 		180251282DD3B381009DFDD7 = {
 			isa = PBXGroup;
 			children = (
-				182FB48C2DD510810056F573 /* WhatsAppClone */,
+				182FB48C2DD510810056F573 /* ChatApp */,
 				180251322DD3B381009DFDD7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,12 +106,12 @@
 		180251322DD3B381009DFDD7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				180251312DD3B381009DFDD7 /* WhatsAppClone.app */,
+				180251312DD3B381009DFDD7 /* Chat App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		182FB48C2DD510810056F573 /* WhatsAppClone */ = {
+		182FB48C2DD510810056F573 /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
 				18B6CB3A2DDB92E000410B46 /* Constant */,
@@ -122,7 +122,7 @@
 				182FB4882DD510810056F573 /* ContentView.swift */,
 				182FB48B2DD510810056F573 /* WhatsAppCloneApp.swift */,
 			);
-			path = WhatsAppClone;
+			path = ChatApp;
 			sourceTree = "<group>";
 		};
 		182FB4922DD510880056F573 /* Splash */ = {
@@ -334,9 +334,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		180251302DD3B381009DFDD7 /* WhatsAppClone */ = {
+		180251302DD3B381009DFDD7 /* Chat App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1802513C2DD3B383009DFDD7 /* Build configuration list for PBXNativeTarget "WhatsAppClone" */;
+			buildConfigurationList = 1802513C2DD3B383009DFDD7 /* Build configuration list for PBXNativeTarget "Chat App" */;
 			buildPhases = (
 				1802512D2DD3B381009DFDD7 /* Sources */,
 				1802512E2DD3B381009DFDD7 /* Frameworks */,
@@ -346,7 +346,7 @@
 			);
 			dependencies = (
 			);
-			name = WhatsAppClone;
+			name = "Chat App";
 			packageProductDependencies = (
 				1846C8712DD9126900AEE854 /* FirebaseAuth */,
 				1846C8732DD9126900AEE854 /* FirebaseCore */,
@@ -357,7 +357,7 @@
 				18B6CB422DDB9EDB00410B46 /* NVActivityIndicatorViewExtended */,
 			);
 			productName = WhatsAppClone;
-			productReference = 180251312DD3B381009DFDD7 /* WhatsAppClone.app */;
+			productReference = 180251312DD3B381009DFDD7 /* Chat App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -375,7 +375,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1802512C2DD3B381009DFDD7 /* Build configuration list for PBXProject "WhatsAppClone" */;
+			buildConfigurationList = 1802512C2DD3B381009DFDD7 /* Build configuration list for PBXProject "Chat App" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -393,7 +393,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				180251302DD3B381009DFDD7 /* WhatsAppClone */,
+				180251302DD3B381009DFDD7 /* Chat App */,
 			);
 		};
 /* End PBXProject section */
@@ -579,7 +579,7 @@
 				DEVELOPMENT_TEAM = XJJX987WNG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WhatsAppClone/Info.plist;
+				INFOPLIST_FILE = "/Users/apple/Documents/GitHub/Chat-AppSwiftUi/ChatApp/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Chat App";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -612,7 +612,7 @@
 				DEVELOPMENT_TEAM = XJJX987WNG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WhatsAppClone/Info.plist;
+				INFOPLIST_FILE = "/Users/apple/Documents/GitHub/Chat-AppSwiftUi/ChatApp/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Chat App";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -637,7 +637,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1802512C2DD3B381009DFDD7 /* Build configuration list for PBXProject "WhatsAppClone" */ = {
+		1802512C2DD3B381009DFDD7 /* Build configuration list for PBXProject "Chat App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1802513A2DD3B383009DFDD7 /* Debug */,
@@ -646,7 +646,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1802513C2DD3B383009DFDD7 /* Build configuration list for PBXNativeTarget "WhatsAppClone" */ = {
+		1802513C2DD3B383009DFDD7 /* Build configuration list for PBXNativeTarget "Chat App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1802513D2DD3B383009DFDD7 /* Debug */,
