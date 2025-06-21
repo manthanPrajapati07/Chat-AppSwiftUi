@@ -135,12 +135,12 @@ final class ChatViewModel: ObservableObject{
 
             let currentUserId = AppFunctions.getCurrentUserId()
 
-            try await db
-                .collection("Friends")
-                .document(currentUserId)
-                .collection("FriendList")
-                .document(uid)
-                .updateData(update)
+//            try await db
+//                .collection("Friends")
+//                .document(currentUserId)
+//                .collection("FriendList")
+//                .document(uid)
+//                .updateData(update)
 
             try await db
                 .collection("Friends")

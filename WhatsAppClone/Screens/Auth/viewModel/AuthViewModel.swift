@@ -235,20 +235,6 @@ final class AuthViewModel: ObservableObject{
         }
     }
     
-    
-     func updateUserAvatar(_ avatar: UserAvatarsList?) async {
-          guard let uid = Auth.auth().currentUser?.uid else { return }
-          let ref = db.collection("User").document(firebaseUser!.uid)
-         if let avatar{
-             do {
-                 try await ref.updateData(["userAvatar": avatar.avatarName])
-                 self.userAvatar = avatar
-             } catch {
-                 print("❌ Failed to update: \(error.localizedDescription)")
-             }
-         }
-      }
-    
     func emailSignUp(email: String, password: String) async{
         AppFunctions.showLoader()
         Task{

@@ -20,51 +20,5 @@
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DAFF871D-C1AE-4C23-9627-2521644CFC33"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "emailSignUp(email:password:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DAFF871D-C1AE-4C23-9627-2521644CFC33 - b1a9e8e6c980fdc0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;WhatsAppClone.UserAvatarsList, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;WhatsAppClone.User, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;FirebaseAuth.AuthDataResult, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in WhatsAppClone.AuthViewModel.emailSignUp(email: Swift.String, password: Swift.String) async -&gt; ()"
-                  moduleName = "WhatsAppClone.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/GitHub/Chat-AppSwiftUi/WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "269"
-                  endingLineNumber = "269">
-               </Location>
-               <Location
-                  uuid = "DAFF871D-C1AE-4C23-9627-2521644CFC33 - b1a9e8e6c980fdc0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;WhatsAppClone.UserAvatarsList, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;WhatsAppClone.User, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in closure #1 (Swift.Result&lt;FirebaseAuth.AuthDataResult, Swift.Error&gt;) -&gt; () in closure #1 () async -&gt; () in WhatsAppClone.AuthViewModel.emailSignUp(email: Swift.String, password: Swift.String) async -&gt; ()"
-                  moduleName = "WhatsAppClone.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/GitHub/Chat-AppSwiftUi/WhatsAppClone/Screens/Auth/viewModel/AuthViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "269"
-                  endingLineNumber = "269">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

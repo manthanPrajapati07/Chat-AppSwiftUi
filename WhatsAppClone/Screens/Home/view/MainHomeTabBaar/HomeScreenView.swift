@@ -33,6 +33,7 @@ struct HomeScreenView: View {
                     }else{
                         SettingView()
                             .environmentObject(authVM)
+                            .environmentObject(homeVM)
                             .padding(.top, 20)
                     }
                     VStack{

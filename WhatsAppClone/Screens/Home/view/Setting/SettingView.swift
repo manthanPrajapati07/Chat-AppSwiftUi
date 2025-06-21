@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingView: View {
     @EnvironmentObject var authVM : AuthViewModel
+    @EnvironmentObject var homeVM : HomeViewModel
     @State private var showAvatarSheet = false
     @State private var showSignOutAlert = false
     @State private var showDeleteUserAlert = false
@@ -82,7 +83,7 @@ struct SettingView: View {
             if newValue != oldValue{
                 print(newValue)
                 Task{
-                   await authVM.updateUserAvatar(newValue)
+                    await homeVM.updateMyProfileAvatar(newAvatar: newValue)
                 }
             }
         }

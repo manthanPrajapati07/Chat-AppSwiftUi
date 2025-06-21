@@ -152,6 +152,44 @@ final class HomeViewModel : ObservableObject{
 
         activeFriendListeners[friendId] = listener
     }
+    
+    func updateMyProfileAvatar(newAvatar: UserAvatarsList?) async {
+        guard let newAvatar else{return}
+
+        do{
+            try await db.collection("User")
+                .document(AppFunctions.getCurrentUserId())
+                .updateData(["userAvatar": newAvatar.avatarName])
+        }catch{
+            print(error.localizedDescription)
+        }
+        do{
+            let friendSnapshot = try await db
+                .collection("Friends")
+                .document(AppFunctions.getCurrentUserId())
+                .collection("FriendList")
+                .getDocuments()
+            
+            let myInfo = AppFunctions.getCurrentUserDetail()
+            
+            for doc in friendSnapshot.documents {
+                let friendId = doc.documentID
+                
+                try await db
+                    .collection("Friends")
+                    .document(friendId)
+                    .collection("FriendList")
+                    .document(AppFunctions.getCurrentUserId())
+                    .updateData([
+                        "friendAvatar": newAvatar.avatarName,
+                    ])
+            }
+        }
+        catch{
+            print(error.localizedDescription)
+        }
+    }
+   
   
 
 }
