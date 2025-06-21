@@ -39,7 +39,7 @@ struct SplashView: View {
         VStack(spacing: 4) {
             Text("form")
                 .font(.system(size: 20, weight: .regular))
-            Text("FACEBOOK")
+            Text("MANTHAN")
                 .font(.system(size: 22, weight: .bold))
         }
     }

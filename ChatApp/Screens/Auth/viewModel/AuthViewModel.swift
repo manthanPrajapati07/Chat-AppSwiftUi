@@ -353,6 +353,9 @@ final class AuthViewModel: ObservableObject{
     
     func signOut() {
         do {
+            
+            HomeViewModel.shared.reset()
+            try auth.signOut()
             firebaseUser = nil
             AppFunctions.delay(1.0) { [weak self] in
                 guard let self else{return}
@@ -360,7 +363,6 @@ final class AuthViewModel: ObservableObject{
                 self.userAvatar = nil
             }
             isNumberVerified = false
-            try auth.signOut()
             
         }catch {
             print(error.localizedDescription)
@@ -370,6 +372,8 @@ final class AuthViewModel: ObservableObject{
     
     func deleteUser() {
         guard let user = auth.currentUser else {return}
+        
+        HomeViewModel.shared.reset()
 
         user.delete { [weak self] error in
             if let error = error {

@@ -15,7 +15,7 @@ final class HomeViewModel : ObservableObject{
     static let shared = HomeViewModel()
     
     private init(){
-        observeUserFriends()
+        reset()
     }
     
     let segmentArrey = ["Explore", "Friends"]
@@ -25,32 +25,38 @@ final class HomeViewModel : ObservableObject{
     @Published var selectedFriend: FriendList? = nil
     
     private var activeFriendListeners: [String: ListenerRegistration] = [:]
+    private var userListener: ListenerRegistration? = nil
 
-    func fetchUsers() {
-        Task {
-            AppFunctions.showLoader()
-            
-            do {
-                
-                let exploreSnapshot = try await db
-                    .collection("User")
-                    .getDocuments()
-                
-                let allUsers = exploreSnapshot.documents.compactMap { doc -> User? in
-                    User(dictionary: doc.data(), id: doc.documentID)
-                }
-                
-                let filteredUsers = allUsers.filter { $0.userId != AppFunctions.getCurrentUserId() }
-                let friendIds = self.arrUserFriend.map { $0.friendId }
-                self.arrExploreUsers = filteredUsers.filter { !friendIds.contains($0.userId) }
-                
-            } catch {
-                print("Error in fetchUsers(): \(error.localizedDescription)")
+    func observeExploreUsers() {
+        let currentUserId = AppFunctions.getCurrentUserId()
+        
+        userListener?.remove()
+        
+        userListener = db.collection("User").addSnapshotListener { snapshot, error in
+            if let error = error {
+                print("❌ Error listening to User collection: \(error.localizedDescription)")
+                return
             }
-            
-            AppFunctions.hideLoader()
+
+            guard let documents = snapshot?.documents else {
+                print("⚠️ No user documents found")
+                return
+            }
+
+            let allUsers = documents.compactMap { doc -> User? in
+                User(dictionary: doc.data(), id: doc.documentID)
+            }
+
+            let filteredUsers = allUsers.filter { $0.userId != currentUserId }
+            let friendIds = self.arrUserFriend.map { $0.friendId }
+
+            DispatchQueue.main.async {
+                self.arrExploreUsers = filteredUsers.filter { !friendIds.contains($0.userId) }
+                print("✅ Explore users updated with listener")
+            }
         }
     }
+
     
     
     func addFriend(to user: User) {
@@ -81,7 +87,8 @@ final class HomeViewModel : ObservableObject{
                     
                     AppFunctions.ShowToast(massage: "\(user.userName) is added in your friends", duration: 1.0)
                     
-                     fetchUsers()
+                    self.arrUserFriend.append(friend)
+                    observeExploreUsers()
 
                 } catch {
                     AppFunctions.ShowToast(massage: error.localizedDescription, duration: 1.0)
@@ -119,6 +126,7 @@ final class HomeViewModel : ObservableObject{
                         self.listenToFriendDocument(friendId: friend.friendId)
                     }
                 }
+                self.observeExploreUsers()
             }
     }
 
@@ -190,7 +198,17 @@ final class HomeViewModel : ObservableObject{
         }
     }
    
-  
+    func reset() {
+        arrExploreUsers.removeAll()
+        arrUserFriend.removeAll()
+        selectedFriend = nil
+        
+        // Remove all listeners
+        for (_, listener) in activeFriendListeners {
+            listener.remove()
+        }
+        activeFriendListeners.removeAll()
+    }
 
 }
 

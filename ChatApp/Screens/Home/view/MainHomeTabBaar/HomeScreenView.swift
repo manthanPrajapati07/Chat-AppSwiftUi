@@ -57,7 +57,7 @@ struct HomeScreenView: View {
             .animation(.easeInOut(duration: 0.5), value: selectedValue)
             .background(AppFunctions.avatarGradient(from: authVM.userAvatar!).ignoresSafeArea().opacity(0.4))
             .onAppear(){
-                homeVM.fetchUsers()
+                homeVM.observeUserFriends()
             }
         }
     }
