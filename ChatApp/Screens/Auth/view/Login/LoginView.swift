@@ -33,7 +33,7 @@ struct LoginView: View {
                     
                     Text("Please confirm your country code and enter your phone number")
                         .multilineTextAlignment(.center)
-                        .frame(maxWidth: geometry.size.width * 0.8)
+                        .frame(maxWidth: geometry.size.width * 0.8, minHeight: 80)
                         .padding(30)
                     
                     numberAndTxtFeild
@@ -41,13 +41,14 @@ struct LoginView: View {
                     
                     Text("use static number +911234567890 if authentication fail")
                         .font(.system(size: 14, weight: .medium))
+                        .frame(height: 40)
                         .foregroundStyle(Color.gray)
                         .padding(.top, 100)
                         .padding(.horizontal)
                     
                     
                     emailSignIn
-                        .padding(.top, 100)
+                        .padding(.top, 70)
                     
                     Spacer()
                 }
@@ -135,7 +136,7 @@ struct LoginView: View {
                     .keyboardType(.numberPad)
                 
             }
-            .frame(maxHeight: 60)
+            .frame(height: 60)
             Divider()
         }
     }
@@ -153,14 +154,12 @@ struct LoginView: View {
                     .frame(height: 0.5)
                     .frame(maxWidth: .infinity)
 
-                // Centered text
                 Text("Sign Up Using Email")
                     .font(.subheadline)
                     .foregroundColor(Color.blue)
                     .padding(.horizontal, 8)
                     .layoutPriority(1)
 
-                // Right line
                 Rectangle()
                     .fill(Color.gray)
                     .frame(height: 0.5)

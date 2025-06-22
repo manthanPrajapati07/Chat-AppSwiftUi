@@ -43,7 +43,7 @@ extension FriendList {
                 let jsonData = try JSONSerialization.data(withJSONObject: lastMassageDict)
                 decodedLastMessage = try JSONDecoder().decode(MessageModel.self, from: jsonData)
             } catch {
-                print("❌ Failed to decode lastMassage:", error.localizedDescription)
+                print(error.localizedDescription)
             }
         }
 

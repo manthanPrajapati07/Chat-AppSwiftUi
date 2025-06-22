@@ -74,7 +74,6 @@ struct ChatView: View {
                         }
                         .background(Color.clear)
                         .onAppear {
-                            // 👇 Scroll only on first appear
                             if !didInitialScroll {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                     if let lastId = chatVM.arrMessages.last?.MessageId {

@@ -55,7 +55,7 @@ final class ChatViewModel: ObservableObject{
         db.collection("User").document(uid)
             .addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot, document.exists else {
-                    print("Document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
+                    print(error?.localizedDescription ?? "Unknown error")
                     return
                 }
 
@@ -67,7 +67,7 @@ final class ChatViewModel: ObservableObject{
                         }
                     
                 } catch {
-                    print("Failed to decode user: \(error.localizedDescription)")
+                    print(error.localizedDescription)
                 }
             }
     }
@@ -122,7 +122,7 @@ final class ChatViewModel: ObservableObject{
                 .document(currentUserId)
                 .updateData(update)
         } catch {
-            print("❌ Failed to update last message:", error.localizedDescription)
+            print(error.localizedDescription)
         }
     }
     
@@ -149,9 +149,8 @@ final class ChatViewModel: ObservableObject{
                 .document(currentUserId)
                 .updateData(update)
             
-            print("typingStatus set \(isTypingStatus)")
         } catch {
-            print("❌ Failed to update last message:", error.localizedDescription)
+            print(error.localizedDescription)
         }
     }
 

@@ -34,12 +34,11 @@ final class HomeViewModel : ObservableObject{
         
         userListener = db.collection("User").addSnapshotListener { snapshot, error in
             if let error = error {
-                print("❌ Error listening to User collection: \(error.localizedDescription)")
+                print(error.localizedDescription)
                 return
             }
 
             guard let documents = snapshot?.documents else {
-                print("⚠️ No user documents found")
                 return
             }
 
@@ -52,7 +51,6 @@ final class HomeViewModel : ObservableObject{
 
             DispatchQueue.main.async {
                 self.arrExploreUsers = filteredUsers.filter { !friendIds.contains($0.userId) }
-                print("✅ Explore users updated with listener")
             }
         }
     }
@@ -106,12 +104,11 @@ final class HomeViewModel : ObservableObject{
             .addSnapshotListener { snapshot, error in
                 print("👀 observeUserFriends fired!")
                 if let error = error {
-                    print("❌ Error fetching FriendList: \(error.localizedDescription)")
+                    print(error.localizedDescription)
                     return
                 }
 
                 guard let documents = snapshot?.documents else {
-                    print("⚠️ No friend documents found")
                     return
                 }
 
@@ -142,18 +139,14 @@ final class HomeViewModel : ObservableObject{
             .collection("FriendList")
             .document(friendId)
             .addSnapshotListener { documentSnapshot, error in
-                print("📥 Document listener fired for \(friendId)")
                 guard let document = documentSnapshot, document.exists,
                       let updatedFriend = FriendList(dictionary: document.data()!, id: friendId) else {
-                    print("⚠️ Failed to update friend: \(friendId)")
                     return
                 }
 
                 DispatchQueue.main.async {
                     if let index = self.arrUserFriend.firstIndex(where: { $0.friendId == friendId }) {
                         self.arrUserFriend[index] = updatedFriend
-                        print("✅ LIVE UPDATE for \(friendId): \(updatedFriend.lastMassage?.MessageText ?? "nil")")
-                        print("✅ LIVE UPDATE for \(friendId): \(updatedFriend.isFriendTyping)")
                     }
                 }
             }
@@ -203,7 +196,6 @@ final class HomeViewModel : ObservableObject{
         arrUserFriend.removeAll()
         selectedFriend = nil
         
-        // Remove all listeners
         for (_, listener) in activeFriendListeners {
             listener.remove()
         }

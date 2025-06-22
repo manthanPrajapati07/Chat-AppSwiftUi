@@ -39,13 +39,10 @@ struct OTPFieldView: View {
                         if newVal.count == 1 {
                             if index < numberOfFields - 1 {
                                 pinFocusState = FocusPin.pin(index + 1)
-                            } else {
-                                // Uncomment this if you want to clear focus after the last digit
-                                // pinFocusState = nil
                             }
                         }
                         else if newVal.count == numberOfFields, let intValue = Int(newVal) {
-                            // Pasted value
+                           
                             otp = newVal
                             updatePinsFromOTP()
                             pinFocusState = FocusPin.pin(numberOfFields - 1)
@@ -59,7 +56,7 @@ struct OTPFieldView: View {
                     }
                     .focused($pinFocusState, equals: FocusPin.pin(index))
                     .onTapGesture {
-                        // Set focus to the current field when tapped
+                
                         pinFocusState = FocusPin.pin(index)
                     }
             }

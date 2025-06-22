@@ -42,14 +42,14 @@ struct OtpVerifyView: View {
                         Text("We have sent you an SMS with a code to the number above")
                             .font(.system(size: 20, weight: .regular))
                             .multilineTextAlignment(.center)
-                            .frame(maxWidth: geometry.size.width * 0.8)
+                            .frame(maxWidth: geometry.size.width * 0.8 , minHeight: 50)
                             .padding()
                             .padding(.top, 30)
                         
                         Text("To complete your phone number verification, please enter the 6-digit activation code.")
                             .font(.system(size: 20, weight: .regular))
                             .multilineTextAlignment(.center)
-                            .frame(maxWidth: geometry.size.width * 0.8)
+                            .frame(maxWidth: geometry.size.width * 0.8, minHeight: 100)
                     }
                     
                     OtpFieldView
@@ -60,6 +60,7 @@ struct OtpVerifyView: View {
                     HStack{
                         Text("Didn't receive a verification code?")
                             .font(.system(size: 16, weight: .medium))
+                            .frame(minHeight: 60)
                             .foregroundStyle(Color.gray)
                         
                         Button {
@@ -153,7 +154,7 @@ struct OtpVerifyView: View {
                     .font(.system(size: 20, weight: .regular))
                     .foregroundStyle(Color.blue)
             }
-            .frame(maxWidth: .infinity, maxHeight: 50, alignment: .leading)
+            .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
             .background(Color(.systemGray6))
             
         }
