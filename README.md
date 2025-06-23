@@ -1,5 +1,8 @@
 # 📱 SwiftUI Chat App Demo
 
+![ChatApp 2](https://github.com/user-attachments/assets/3534d685-ec77-422d-a9a7-91a6709311e4)
+
+
 This is a simple chat app I built while learning **SwiftUI** to explore how to build real-time apps using **Firebase** and follow best practices with **MVVM architecture**.
 
 https://youtube.com/shorts/PtZo542mxDI?si=Kb4TKpB7Yu2Oyrhm
@@ -50,11 +53,6 @@ Add it to your Xcode project by:
 Dragging it into the Xcode project navigator
 Ensuring it's added to your app target
 
-
-![IMG_0778](https://github.com/user-attachments/assets/9ca8151f-30e1-4dac-92da-99ec8da9c80d)
-![IMG_0777](https://github.com/user-attachments/assets/8835e958-1bad-4c23-8538-bc7f4f4cd84e)
-![IMG_0776](https://github.com/user-attachments/assets/2df3710e-1a5d-485a-9916-2f41ee749086)
-![IMG_0774](https://github.com/user-attachments/assets/08c0efda-f441-4039-b3f5-0f278d4822af)
 
 
 
