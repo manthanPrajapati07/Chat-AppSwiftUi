@@ -27,12 +27,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             return
         }
 
-        // Your other handling logic
         completionHandler(.newData)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-            // Called when app is terminated (swipe kill)
             Task {
                 await AppFunctions.setUserOnlineStatus(false)
             }
@@ -50,7 +48,6 @@ struct WhatsAppCloneApp: App {
         WindowGroup {
             ContentView()
                 .onChange(of: scenePhase) { newPhase in
-                    print("Scene phase changed: \(newPhase)")
                     DispatchQueue.main.async {
                         Task {
                             switch newPhase {
