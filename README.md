@@ -34,15 +34,15 @@ https://youtube.com/shorts/PtZo542mxDI?si=Kb4TKpB7Yu2Oyrhm
 
 ## 🔧 Getting Started
 
-### 1. Clone the Repository
+1. **Clone the Repository**
 
 git clone https://github.com/your-username/SwiftUI-ChatApp-Demo.git
 cd SwiftUI-ChatApp-Demo 
 
-### 2. Install Dependencies
+2. **Install Dependencies**
 No external package managers (like CocoaPods or Swift Package Manager) are used apart from Firebase. You just need to have Xcode and Firebase SDK installed.
 
-### 3. Set Up Firebase
+3. **Set Up Firebase**
 ⚠️ Important: The file GoogleService-Info.plist has been excluded from this repository for security reasons.
 To run the project successfully:
 
