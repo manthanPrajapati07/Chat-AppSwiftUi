@@ -90,8 +90,6 @@ struct SettingView: View {
         
     }
     
-    
-    
     var profileInfoView : some View {
         VStack{
             Button {
